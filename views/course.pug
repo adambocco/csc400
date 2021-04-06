@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    i#labModuleInfo(style="display:none;") #{labName},#{labModule}
+    .container 
+        div.text-center Labs:
+            select#labsDropdown.my-3.w-100
+        div.text-center Modules:
+            select#modulesDropdown.my-3.w-100
+        div#youtubePlayerSection
+        div#videoNavigation.my-3.text-center
+
+    script(src='/javascripts/course.js')

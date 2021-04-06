@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    .container.text-center
+        h3 Login
+        form(action="/users/loginCheck" method="POST")
+            .form-group
+                label(for='email') Email address
+                input#email.form-control(name="email" type='email' aria-describedby='emailHelp' placeholder='Enter email')
+            .form-group
+                label(for='password') Password
+                input#password.form-control(name="password" type='password' placeholder='Password')
+            button#loginButton.btn.btn-primary(type='button') Submit

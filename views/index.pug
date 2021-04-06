@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  div.container.my-3
+    div.row
+      div.col
+        h3 Welcome to Robot Academy
+        p.text-center.mt-1
+          | Robot Academy is a web application that is meant to teach the fundamentals of robotics simulation through a user-friendly and intuitive video lab environment. Robotics simulation through the software CopelliaSim will allow users free access to follow along with video tutorials. Labs will consist of short, bite-sized video lessons followed interact prompts to test the user&apos;s comprehension. Interactive prompts will include a multitude of different quiz components to test the user&apos;s comprehension along their journey through the video course. Hints and features to offer and receive help from the community will be present to ensure that students of our platform will always be able to keep up with the material while also demanding that the student understands the material. This application is geared towards students of a variety of ages and skill levels and the interface design will reflect that.
+    div.row.box-shadow.mt-3
+      div.col
+        h4 Get Started:
+        div.row
+          div.col.card.m-2
+            div.card-body
+              h6 Create an Account
+              a.btn.btn-outline-primary.float-right.m-3.p-2.bg-gray(type='button' href='/register') Register
+          div.col.card.m-2
+            .card-body
+              h6 Choose a Lab
+              a.btn.btn-outline-primary.float-right.m-3.p-2.bg-gray(type='button' href='/dashboard') Dashboard
+          div.col.card.m-2
+            .card-body
+              h6 Connect With Others
+              a.btn.btn-outline-primary.float-right.m-3.p-2.bg-gray(type='button' href='/communitychat') Forums
+    div.row.mt-3
+      div.col.p-3.text-center
+        h3.mb-2 Why Choose Us?
+        |         The purpose of this application is to allow anyone with the desire to learn robotics simulation an entry-point into this field without any requisite knowledge about it. It will also provide an entry-point for those without the means to pursue higher education in this field or the capital to expend on some of the more expensive robotics learning applications currently on the market.
+        |         Robotics education through robotics simulation will allow those without access to physical robotics hardware to get started using this platform. Children will also be able to use our platform due to its simple interface and accessibility. Robotics education has been proven to increase standardizes testing scores in children and it is important dhat Robot Academy include this audience[REFERENCE]. Youth education of robotics teaches the fundamentals of engineering design, programming, and offers an introduction to the STEM field.
+      div.col.card
+        img.card-body(src='/images/welcome.jpg')
+

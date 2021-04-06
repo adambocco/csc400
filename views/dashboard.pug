@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    .container 
+        .row 
+            .col
+                div 
+                .my-3.p-2.bg-white.rounded.box-shadow
+                    h3.pb-1 Labs:
+                    select#labsDropdown.my-3.w-100
+                    h4.pb-1 Modules:
+                    div.border.border-info.p-2
+                        div.border.border-primary(style="height:500px; overflow-y: scroll;")
+                            ul#modulesSection.list-group
+            .col
+                div
+                .my-3.p-3.bg-white.rounded.box-shadow
+                    h3.p-3.mb-0 Account Management
+                    div 
+                        form.border.border-info
+                            .form-group.p-3.text-center
+                                label(for='updateEmailInput') Email address
+                                small#updateEmailStatusText.text-danger.d-block
+                                input#updateEmailInput.form-control.m-2(type='email' aria-describedby='emailHelp' placeholder='Enter email')
+                                a#updateEmailButton.btn.m-3.btn-primary(type='button') Submit
+                            .form-group.p-3.text-center
+                                label(for='updatePasswordInput') Password
+                                small#updatePasswordStatusText.text-danger.d-block
+                                input#updatePasswordInput.form-control.m-2(type='password' placeholder='Password')
+                                input#updatePasswordInputRepeat.form-control.m-2(type='password' placeholder='Password Again')
+
+                                a#updatePasswordButton.btn.m-3.btn-primary(type='button') Submit
+    script(defer src='/javascripts/dashboard.js')
