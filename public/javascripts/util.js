@@ -1,36 +1,10 @@
-// let token = document.getElementById("tokenTag");
-// if (token && token.innerHTML != "") {
-//     console.log("SETTING TOKEN localstorage TO: ",token.innerHTML)
-//     window.localStorage.setItem("token", token.innerHTML)
-// }
+console.log("UTILS LOADED")
 
 let emailDisplayed = document.getElementById("emailDisplayed");
 let user = false;
-// if (document.getElementById("logout").innerHTML == "true") {
-//     console.log("ERASING COOKIE")
-//     eraseCookie("token");
-// }
 
-// function createCookie(name,value,days) {
-//     if (days) {
-//        var date = new Date();
-//        date.setTime(date.getTime()+(days*24*60*60*1000));
-//        var expires = "; expires="+date.toGMTString();
-//     }
-//     else var expires = "";
-//     document.cookie = name+"="+value+expires+";";
-//     console.log("SETTING TOKEN cookie TO: ",token.innerHTML)
-// }
-// if (token && token.innerHTML != "") {
-//     createCookie("token", token.innerHTML, 7)
-// }
-
-// function eraseCookie(name) {   
-//     document.cookie = name+'=; Max-Age=-99999999;';  
-// }
 let token = null;
 const handleLogin = async function () {
-    console.log("HandleLogin clicked")
     let email = document.querySelector("#email").value;
     let password = document.querySelector("#password").value;
     let loginStatus
@@ -41,9 +15,14 @@ const handleLogin = async function () {
               'Content-Type': 'application/json'
             }
           });
-    } catch (err) {console.log(err)}
+    } catch (err) {
+        if (err.response.status) {
+            document.getElementById("errorSection").innerHTML = "Email or password invalid";
 
-    console.log("LOGINSTATUS: ",loginStatus)
+            return;
+        }
+    }
+
     token = loginStatus.data.token
     document.location.href = "http://" + window.location.hostname + ":3000/users/dashboard"
 };
@@ -62,7 +41,7 @@ const handleRegister = async function() {
               'token': token
             }
         })
-        console.log(registerStatus)
+
     }catch(err) {console.log(err)}
     document.location.href = "http://" + window.location.hostname + ":3000/users/login"
 };
@@ -78,8 +57,10 @@ const handleLogout = async function() {
               'token': token
             }
         })
-        location.reload();
-    }catch(err) {console.log(err)}
+        document.location.href = "http://" + window.location.hostname + ":3000/users/login"
+    }catch(err) {
+        console.log(err)
+    }
 }
 
 const checkLoginStatus = async function() {
@@ -125,7 +106,9 @@ function getCookie(cname) {
     else {
         user = await checkLoginStatus()
     }
+    await handleUnauthorized()
     handleLoginState()
+
 })()
 
 function handleLoginState() {
@@ -161,4 +144,225 @@ if (registerButton)
 logoutNavLink.onclick = () => {handleLogout();};
 loginNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":3000/users/login" }
 registerNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":3000/users/register" }
-dashboardNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":3000/users/dashboard" }
+dashboardNavLink.onclick = () => {
+    if (user) {
+        document.location.href = "http://" + window.location.hostname + ":3000/users/dashboard"
+    } else {
+        document.location.href = "http://" + window.location.hostname + ":3000/users/login"
+    }
+}
+
+let userHistory;
+async function handleUnauthorized() {
+    if (window.location.pathname == "/users/dashboard") {
+        if (!user) {
+            document.location.href = "http://" + window.location.hostname + ":3000/users/login"
+            return
+        }
+
+
+        try {
+            userHistory = await axios.post("http://" + window.location.hostname + ":3000/users/course/visited", JSON.stringify({"email": user.data.email}),
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+                });
+        } catch (err) {
+            console.log(err)
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // <------DASHBOARD ------>
+
+
+
+        console.log("USER: ",user)
+        console.log("USER HISTORY: ", userHistory)
+
+        let userMostRecent = userHistory.data.mostRecent.split(",");
+
+
+
+        let labsDropdown = document.getElementById("labsDropdown");
+        let modulesSection = document.getElementById("modulesSection");
+        
+
+        
+        for (let i = 0; i < LABS.length; i++) {
+            if (i == parseInt(userMostRecent[0])-1) {
+                let labsDefaultSelection = document.createElement("option");
+                labsDefaultSelection.innerText ="Lab " + userMostRecent[0] + " : " + LABS[parseInt(userMostRecent[0])-1][0]
+                labsDefaultSelection.selected = "selected"
+                labsDropdown.appendChild(labsDefaultSelection)
+                
+            } else {
+                let labSelection = document.createElement("option");
+                labSelection.innerText = "Lab " + (i+1) + " : " +LABS[i][0]
+                labsDropdown.appendChild(labSelection)
+            }
+        }
+        
+        labsDropdown.addEventListener('change', (event)=> {
+            changeLab(event.target.value.split(" : ")[1])
+        })
+        
+        function changeLab(lab) {
+            modulesSection.innerHTML = "";
+            for (let i = 0; i < LABS.length; i++) {
+                if (lab == LABS[i][0]) {
+                    for (let j = 0; j < LABS[i][1].length; j++) {
+                        let moduleListing = document.createElement("li");
+                        moduleListing.className = "list-group-item d-flex"
+
+                        console.log("MODULE#: "+j)
+                        if (parseInt(userHistory.data["lab"+(i+1)]) & Math.pow(2, j+1) ) {
+                            moduleListing.className += " bg-info"
+                        }
+
+                        moduleListing.innerText = LABS[i][2][j]
+        
+                        let goToModuleLink = document.createElement("a")
+                        let goToModuleIcon = document.createElement("i")
+                        goToModuleIcon.className = "fas fa-arrow-right fa-2x"
+                        goToModuleLink.className ="ml-auto"
+        
+                        goToModuleLink.href = "http://" + window.location.hostname + ":3000/users/course/" + i + "/" + j
+        
+                        // TODO: Add link to course
+        
+                        goToModuleLink.appendChild(goToModuleIcon)
+                        moduleListing.appendChild(goToModuleLink)
+        
+                        modulesSection.appendChild(moduleListing);
+                    }
+                }
+            }
+        }
+        
+        changeLab(LABS[parseInt(userMostRecent[0])-1][0])
+        
+        // <-------Account Management------->
+        
+        let updateEmailInput = document.getElementById("updateEmailInput")
+        let updateEmailButton = document.getElementById("updateEmailButton")
+        let updateEmailStatusText = document.getElementById("updateEmailStatusText")
+        
+        
+        let updatePasswordInput = document.getElementById("updatePasswordInput")
+        let updatePasswordInputRepeat = document.getElementById("updatePasswordInputRepeat")
+        let updatePasswordButton = document.getElementById("updatePasswordButton")
+        let updatePasswordStatusText = document.getElementById("updatePasswordStatusText")
+        
+        updateEmailButton.addEventListener("click", async (event)=> {
+            let updateStatus
+            console.log("USER EMAIL HERE BABYYYY:",user.data.email)
+            try {
+                updateStatus = await axios.post("http://" + window.location.hostname + ":3000/users/updateEmail", JSON.stringify({"oldEmail": user.data.email,"newEmail": updateEmailInput.value}),
+                {
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                  });
+            } catch (err) {
+                console.log(err)
+                console.log(err.response)
+                if (err.response.status == 400) {
+                    console.log(err.response.data.message)
+                    if (err.response.data.message) {
+                        updateEmailStatusText.innerHTML = "Email <b>" + updateEmailInput.value + "</b> is taken"
+                        updateEmailStatusText.className = "text-danger d-block"
+                        updateEmailInput.value = ""
+                        
+                    } else {
+                        updateEmailStatusText.innerHTML = "Email <b>" + updateEmailInput.value + "</b> is invalid ( Ex. email@example.com )"
+                        updateEmailStatusText.className = "text-danger d-block"
+                        updateEmailInput.value = ""
+                    }
+                    return
+                } 
+            }
+        
+            token = updateStatus.data.token
+        
+            emailDisplayed.innerHTML = updateEmailInput.value;
+            user.data.email = updateEmailInput.value;
+        
+            updateEmailStatusText.innerHTML = "Email changed!<br>New email: <b>" + updateEmailInput.value + "</b>"
+            updateEmailStatusText.className = "text-success d-block"
+            updateEmailInput.value = ""
+            // document.location.href = "http://" + window.location.hostname + ":3000/users/dashboard"
+        })
+        
+        updatePasswordButton.addEventListener("click", async (event)=> {
+        
+            if (updatePasswordInput.value !== updatePasswordInputRepeat.value) {
+                updatePasswordStatusText.innerHTML = "Passwords don't match"
+                updatePasswordStatusText.className = "text-danger d-block"
+                updatePasswordInput.value = ""
+                updatePasswordInputRepeat.value = ""
+                return
+            }
+        
+            let updateStatus
+            try {
+                updateStatus = await axios.post("http://" + window.location.hostname + ":3000/users/updatePassword", JSON.stringify({"email": user.data.email,"newPassword": updatePasswordInput.value}),
+                {
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                  });
+            } catch (err) {
+                console.log(err)
+                console.log(err.response)
+                if (err.response.status == 400 && err.response) {
+                    updatePasswordStatusText.innerHTML = "Password is invalid ( Please use > 6 characters )"
+                    updatePasswordStatusText.className = "text-danger d-block"
+                    updatePasswordInput.value = ""
+                    updatePasswordInputRepeat.value = ""
+                    return
+                }
+            }
+        
+            token = updateStatus.data.token
+        
+            updatePasswordStatusText.innerHTML = "Password changed!"
+            updatePasswordStatusText.className = "text-success d-block"
+            updatePasswordInput.value = ""
+            updatePasswordInputRepeat.value = ""
+        
+        })
+        
+        let mostRecentModuleButton = document.getElementById("mostRecentModule");
+        mostRecentModuleButton.innerHTML += "<br><b>Lab " +userMostRecent[0] + " -  Module " + userMostRecent[1]+"</b>";
+        mostRecentModuleButton.href = "http://" + window.location.hostname + ":3000/users/course/" + (parseInt(userMostRecent[0])-1) + "/" + (parseInt(userMostRecent[1])-1)
+        
+
+        // <------DASHBOARD ------>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
+

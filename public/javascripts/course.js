@@ -7,41 +7,6 @@ let moduleNumber = labModuleInfo[1];
 console.log("Lab number: ",labNumber)
 console.log("module number: ", moduleNumber)
 
-const LAB1 = "Assembly Line Simulation";
-const LAB1LINKS = ["lBvjUTHeU5E", "zxwhCrkfoiM", "gV81KmNw5vk", "YYBELBuuEOM", 
-                "nxkv7HZ7SkE", "4jJSoMwZoaw", "tjvz9G_RVHE", "dR0d6E-QoSw",
-                "qJyv152GNUY", "q6ERxYjSZxY", "MsLzc3a_yV4", "Mvl2R6dUQgo",
-                "0AdYeFACScw", "YG3tTNfdPy4", "4e0P_QJZE3c", "j6qYPKkK_YY"];
-const LAB1NAMES = ["Introduction", "Building the Robotic Arm", "Adding Conveyor Belt and Tables",
-            "Adding a Vision Sensor", "Writing the Factory Code (Part 1)", "Writing the Factory Code (Part 2)",
-            "Vision Sensor and Conveyor Belt Control", "Sensing the Product Type", "Configuring Inverse Kinematics",
-            "Idle and Grab Positions", "Color and Path Positions", "Defining Dummy Positions",
-            "Definint Robotic Arm Targets", "Defining Robotic Arm Behavior", "Grabbing and Dropping Products",
-            "Conclusion"];
-
-const LAB2 = "Maze Traversal Simulation";
-const LAB2LINKS = ["L2-14VdjpZ0", "gfD5Y4t89lE", "jhNr_7D1qwA", "4yZCF6grTMg", 
-                "zzZtPfRIAQQ", "-VFRPylIWF0", "hZahk9ft_ZQ", "qA7NfoAQUTU",
-                "k2rCh7W2uz0", "9zxNyzY-IKM", "aB9TOzUbO-M", "cMv9ig8nDc0"];
-const LAB2NAMES = ["Introduction", "Creating the Maze", "Configuring the Maze and Finish Line",
-            "Adding and Positioning Sensors", "Configuring Sensors", "Driving the Mobile Robot",
-            "Staying Between the Walls", "Turning Corners", "Turning Around",
-            "Configuring the Vision Sensor", "Taking the Correct Path", "Conclusion"];
-
-
-const LAB3 = "Soccer Free Shot Simulation";
-const LAB3LINKS = ["zmxWTv78Xsk", "afaRanm81nM", "0FS5Q-9FkBM", "LWA6UUrLc-I"];
-const LAB3NAMES = ["Introduction and Environment Setup", "Creating a Robot to Shoot a Soccer Ball", 
-                    "Triggering a Goalie with Proximity Sensors", "Creating a UI Element"];
-
-const LABS = [  [LAB1, LAB1LINKS, LAB1NAMES],
-                [LAB2, LAB2LINKS, LAB2NAMES],
-                [LAB3, LAB3LINKS, LAB3NAMES]];
-
-const LABSOBJECT = {LAB1: [LAB1LINKS, LAB1NAMES],
-                    LAB2: [LAB2LINKS, LAB2NAMES],
-                    LAB3: [LAB3LINKS, LAB3NAMES]}
-
 let youtubePlayer = document.createElement("iframe")
 youtubePlayer.setAttribute("src", "https://www.youtube.com/embed/"+LABS[labNumber][1][moduleNumber])
 youtubePlayer.setAttribute("frameborder","0")
@@ -121,3 +86,31 @@ modulesDropdown.addEventListener('change', (event)=> {
     let newModuleNumber = parseInt(event.target.value) - 1
     document.location.href = "http://" + window.location.hostname + ":3000/users/course/" + labNumber + "/" + newModuleNumber
 })
+
+let resourcesDropdown = document.getElementById("resourcesDropdown")
+let downloadResourcesButton = document.getElementById("downloadResourcesButton")
+
+for (let i = 0; i < LABS[labNumber][4].length; i++) {
+    let resourceSelection = document.createElement("option");
+    resourceSelection.innerHTML = LABS[labNumber][4][i]
+    resourcesDropdown.appendChild(resourceSelection)
+}
+
+resourcesDropdown.addEventListener('change', (event)=> {
+    downloadResourcesButton.href = "/resources/"+resourcesDropdown.value
+})
+
+setTimeout(async ()=> {
+    try {
+        userHistory = await axios.post("http://" + window.location.hostname + ":3000/users/course/visit", JSON.stringify({"email": user.data.email, "labNumber": labNumber, "moduleNumber": moduleNumber}),
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            });
+    } catch (err) {
+        console.log(err)
+
+    }
+    console.log("VITIED: ")
+},3000)

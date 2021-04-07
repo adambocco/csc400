@@ -4,6 +4,7 @@ block content
     .container.text-center
         h3 Login
         form(action="/users/loginCheck" method="POST")
+            #errorSection.text-center.text-danger.m-2.p-1
             .form-group
                 label(for='email') Email address
                 input#email.form-control(name="email" type='email' aria-describedby='emailHelp' placeholder='Enter email')

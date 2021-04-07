@@ -8,14 +8,17 @@ block content
                 .my-3.p-2.bg-white.rounded.box-shadow
                     h3.pb-1 Labs:
                     select#labsDropdown.my-3.w-100
-                    h4.pb-1 Modules:
+                    .d-flex.justify-content-between.p-1.m-1
+                        h4 Modules:
+                        a#mostRecentModule.m-2.btn.btn-success(type="button") Go To Last Visited Module
+                            i.fas.fa-arrow-circle-right.pl-2
                     div.border.border-info.p-2
                         div.border.border-primary(style="height:500px; overflow-y: scroll;")
                             ul#modulesSection.list-group
             .col
                 div
                 .my-3.p-3.bg-white.rounded.box-shadow
-                    h3.p-3.mb-0 Account Management
+                    h3.p-3.mb-2 Account Management:
                     div 
                         form.border.border-info
                             .form-group.p-3.text-center
@@ -30,4 +33,24 @@ block content
                                 input#updatePasswordInputRepeat.form-control.m-2(type='password' placeholder='Password Again')
 
                                 a#updatePasswordButton.btn.m-3.btn-primary(type='button') Submit
-    script(defer src='/javascripts/dashboard.js')
+        .row 
+            .col
+                div 
+                .my-3.p-2.bg-white.rounded.box-shadow
+                    h3.pb-1 New Content:
+
+                    div.row.border.border-info.p-2.text-center
+                        .col-sm-4.text-center
+                            h5 Assembly Line Lab
+                            img.img-fluid.card-body(src='/images/lab1-1.png')
+                            a.btn.btn-primary Go To Lab
+                        .col-sm-4.text-center
+                            h5 Maze Traversal Lab
+                            img.img-fluid.card-body(src='/images/lab2-1.png')
+                            a.btn.btn-primary Go To Lab
+                        .col-sm-4.text-center
+                            h5 Soccer Free-Shot Lab
+                            img.img-fluid.card-body(src='/images/welcome.jpg')
+                            a.btn.btn-primary Go To Lab
+
+    script(src='/javascripts/dashboard.js')

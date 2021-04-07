@@ -4,8 +4,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const auth = require("../middleware/auth")
+const authRedirect = require("../middleware/authRedirect")
 
 const User = require("../models/user");
+const History = require("../models/history");
 
 
 router.get('/', function(req, res, next) {
@@ -13,9 +15,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/dashboard', function(req, res, next) {
-  res.render('dashboard', { title: 'Express' });
+
+    res.render('dashboard', { title: 'Express' });
 
 });
+
+router.post('/dashboardAuth', authRedirect, function(req, res, next) {
+  if (req.user) {
+    res.redirect("/dashboard");
+  } else {
+    res.redirect("/login");
+  }
+})
 
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Express' });
@@ -29,9 +40,48 @@ router.get('/register', function(req, res, next) {
 
 router.get('/course/:lab/:module', function(req, res, next) {
   res.render('course', { labName: req.params.lab, labModule: req.params.module});
-  
 });
 
+router.post("/course/visit", async function(req, res, next) {
+  const {email, labNumber, moduleNumber} = req.body;
+  try {
+    let history = await History.findOne({
+        email
+    });
+    if (!history) {
+      history = new History({
+        email: email
+    });
+    }
+    let labKey = "lab" + (parseInt(labNumber)+1);
+    history[labKey] = parseInt(history[labKey]) | Math.pow(2, parseInt(moduleNumber)+1)
+    history.mostRecent = (parseInt(labNumber)+1) + "," + (parseInt(moduleNumber)+1);
+    await history.save();
+    res.status(200).json({status:"success"})
+  }
+  catch (error) {
+    res.status(500).send("Error in Saving");
+  }
+})
+
+router.post("/course/visited", async function(req, res, next) {
+  const {email} = req.body;
+  console.log("EMAIL: ", email)
+  try {
+    let history = await History.findOne({
+        email
+    });
+    if (!history) {
+      history = new History({
+        email: email
+      });
+    } 
+    res.json(history)
+  }
+  catch (error) {
+    res.status(500).send("Error");
+  }
+})
 
 router.post(
     "/registerCheck",
