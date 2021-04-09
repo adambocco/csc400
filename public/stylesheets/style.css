@@ -1,4 +1,8 @@
+@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
 
+body {
+  font-family: 'Calibri', sans-serif !important
+}
 /* YOUTUBE PLAYER */
 .video-container {
   overflow: hidden;
@@ -20,3 +24,53 @@
   height: 100%;
 }
 /* YOUTUBE PLAYER */
+
+.borderless-select {
+  border: 0px solid black;
+  text-align-last:center;
+}
+.borderless-select:active {
+  border:0px solid black;
+  text-align-last:center;
+}
+.borderless-select:active {
+  border:0px solid black;
+  text-align-last:center;
+}
+
+input:focus,
+select:focus, .form-control:focus,
+textarea:focus,
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.labs-dropdown {
+  border-radius: 10px;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+.navbar-bg {
+  background-color: rgb(190, 211, 229);
+}

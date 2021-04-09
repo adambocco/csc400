@@ -58,6 +58,13 @@ const LAB1CODE = [
                     // Module 16
                     ""];
 const LAB1RESOURCES = ["Lab1Script.pdf"];
+const LAB1GOAL = "At the end of this lab you will have a completed scene in which products coming down a conveyor belt are identified as a certain class of product. You will create a robot arm capable of removing these items to a specific location.";
+const LAB1LEARNINGOUTCOMES = [  "Importing models",
+                                "Using vision sensor to product types by color",
+                                "Manipulation of revolute joints",
+                                "Programmatically create and modify shapes",
+                                "Basics of inverse kinematics to dynamically control jointed models",
+                                "Setting inverse kinematic waypoints and paths"];
 
 const LAB2 = "Maze Traversal Simulation";
 const LAB2LINKS = ["L2-14VdjpZ0", "gfD5Y4t89lE", "jhNr_7D1qwA", "4yZCF6grTMg", 
@@ -104,7 +111,13 @@ const LAB2CODE = [
     // Module 12
     ""];
 const LAB2RESOURCES = ["Lab2Script.pdf", "mazes.txt"];
-            
+const LAB2GOAL = ["In this lab you will create a 4-wheeled mobile robot equipped with sensors to automate movement and obstacle avoidance. This robot will be placed in a maze and programmed with the 'Wall-Following Algorithm' to traverse the maze until it finds the end."]
+const LAB2LEARNINGOUTCOMES = [  "Attaching sensor to model body",
+                                "Reading from proximity and vision sensors",
+                                "Programatically produce an environment (maze)",
+                                "'Wall-Following Algorithm' for maze traversal",
+                                "Using joint explicit handling to drive vehicle"]
+
 
 const LAB3 = "Soccer Free Shot Simulation";
 const LAB3LINKS = ["zmxWTv78Xsk", "afaRanm81nM", "0FS5Q-9FkBM", "LWA6UUrLc-I"];
@@ -123,11 +136,13 @@ const LAB3CODE = [
     // Module 4
     ""];
 const LAB3RESOURCES = ["Lab3Script.pdf"];
+const LAB3GOAL = "";
+const LAB3LEARNINGOUTCOMES = [];
 
 
 
-const LABS = [  [LAB1, LAB1LINKS, LAB1NAMES, LAB1CODE, LAB1RESOURCES],
-                [LAB2, LAB2LINKS, LAB2NAMES, LAB2CODE, LAB2RESOURCES],
-                [LAB3, LAB3LINKS, LAB3NAMES, LAB3CODE, LAB3RESOURCES]];
+const LABS = [  [LAB1, LAB1LINKS, LAB1NAMES, LAB1CODE, LAB1RESOURCES, LAB1GOAL, LAB1LEARNINGOUTCOMES],
+                [LAB2, LAB2LINKS, LAB2NAMES, LAB2CODE, LAB2RESOURCES, LAB2GOAL, LAB2LEARNINGOUTCOMES],
+                [LAB3, LAB3LINKS, LAB3NAMES, LAB3CODE, LAB3RESOURCES, LAB3GOAL, LAB3LEARNINGOUTCOMES]];
 
               

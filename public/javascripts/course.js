@@ -31,9 +31,33 @@ let leftNavIcon = document.createElement("i");
 leftNavIcon.className = "fas fa-arrow-circle-left fa-3x"
 leftNav.appendChild(leftNavIcon)
 
-let videoTitle = document.createElement("h3");
-videoTitle.className = "p-3 d-inline"
-videoTitle.innerText = LABS[labNumber][2][moduleNumber]
+// let videoTitle = document.createElement("h3");
+// videoTitle.className = "p-3 d-inline"
+// videoTitle.innerText = LABS[labNumber][2][moduleNumber]
+
+let selectModuleDropdown = document.createElement("select");
+selectModuleDropdown.className = "h3 m-3";
+selectModuleDropdown.style.position = "relative";
+selectModuleDropdown.style.bottom = "4px";
+selectModuleDropdown.style.border = "0px";
+selectModuleDropdown.style["text-align-last"] = "center";
+
+for (let i = 0; i < LABS[labNumber][2].length; i++) {
+    if (i == moduleNumber) {
+        let modulesDefaultSelection = document.createElement("option");
+        modulesDefaultSelection.innerText = (parseInt(moduleNumber)+1) + ": " + LABS[labNumber][2][moduleNumber]
+        modulesDefaultSelection.selected = "selected"
+        modulesDefaultSelection.className = ""
+        selectModuleDropdown.appendChild(modulesDefaultSelection)
+        continue
+    }
+    let moduleSelection = document.createElement("option");
+    moduleSelection.innerText = (i + 1) + ": " + LABS[labNumber][2][i]
+    moduleSelection.className = ""
+    selectModuleDropdown.appendChild(moduleSelection)
+}
+
+
 
 let rightNav = document.createElement("a");
 if ( moduleNumber < LABS[labNumber][1].length - 1 ) {
@@ -45,44 +69,39 @@ rightNav.appendChild(rightNavIcon)
 
 
 videoNavigation.appendChild(leftNav)
-videoNavigation.appendChild(videoTitle)
+videoNavigation.appendChild(selectModuleDropdown)
 videoNavigation.appendChild(rightNav)
 
 // <------ Lab and Modules Dropdown ------>
 
+let navLabSelect = document.getElementById("navLabSelect");
 let labsDropdown = document.getElementById("labsDropdown");
-let modulesDropdown = document.getElementById("modulesDropdown");
+// let modulesDropdown = document.getElementById("modulesDropdown");
 
-let labsDefaultSelection = document.createElement("option");
-labsDefaultSelection.innerText = (parseInt(labNumber)+1) + ": " + LABS[labNumber][0]
-labsDefaultSelection.selected = "selected"
-labsDropdown.appendChild(labsDefaultSelection)
-
-let modulesDefaultSelection = document.createElement("option");
-modulesDefaultSelection.innerText = (parseInt(moduleNumber)+1) + ": " + LABS[labNumber][2][moduleNumber]
-modulesDefaultSelection.selected = "selected"
-modulesDropdown.appendChild(modulesDefaultSelection)
 
 for (let i = 0; i < LABS.length; i++) {
-    if (i == labNumber) {continue}
+    if (i == labNumber) {
+        let labsDefaultSelection = document.createElement("option");
+        labsDefaultSelection.innerText = "Lab " +(parseInt(labNumber)+1) + ": " + LABS[labNumber][0]
+        labsDefaultSelection.selected = "selected"
+        labsDropdown.appendChild(labsDefaultSelection)
+        continue;
+    }
     let labSelection = document.createElement("option");
-    labSelection.innerText = (i + 1) + ": " + LABS[i][0]
+    labSelection.innerText = "Lab " + (i + 1) + ": " + LABS[i][0]
     labsDropdown.appendChild(labSelection)
 }
 
-for (let i = 0; i < LABS[labNumber][2].length; i++) {
-    if (i == moduleNumber) {continue}
-    let moduleSelection = document.createElement("option");
-    moduleSelection.innerText = (i + 1) + ": " + LABS[labNumber][2][i]
-    modulesDropdown.appendChild(moduleSelection)
-}
+
+navLabSelect.appendChild(labsDropdown);
+
 
 labsDropdown.addEventListener('change', (event)=> {
-    let newLabNumber = parseInt(event.target.value) - 1
+    let newLabNumber = parseInt(event.target.value.split(":")[0].split(" ")[1]) -1;
     document.location.href = "http://" + window.location.hostname + ":3000/users/course/" + newLabNumber + "/0"
 })
 
-modulesDropdown.addEventListener('change', (event)=> {
+selectModuleDropdown.addEventListener('change', (event)=> {
     let newModuleNumber = parseInt(event.target.value) - 1
     document.location.href = "http://" + window.location.hostname + ":3000/users/course/" + labNumber + "/" + newModuleNumber
 })
@@ -112,5 +131,4 @@ setTimeout(async ()=> {
         console.log(err)
 
     }
-    console.log("VITIED: ")
-},3000)
+},2000)

@@ -6,51 +6,85 @@ block content
             .col
                 div 
                 .my-3.p-2.bg-white.rounded.box-shadow
-                    h3.pb-1 Labs:
-                    select#labsDropdown.my-3.w-100
-                    .d-flex.justify-content-between.p-1.m-1
-                        h4 Modules:
-                        a#mostRecentModule.m-2.btn.btn-success(type="button") Go To Last Visited Module
+                    h3#labNumber
+                    .text-center
+                        select#labsDropdown.my-3.w-100.text-primary.h1.borderless-select
+                    //- .text-center
+                    //-     h1#labName.text-primary.m-1
+                    .progress.mb-5.mt-1
+                        div#labProgress.progress-bar(role="progress-bar", style="width:0%;", aria-valuenow="0", aria-valuemin="0" aria-valuemax="100" ) 0%
+                    div.card.m-2.mt-4
+                        h4.pt-3.px-3 Goal: 
+                        p#goal.card-body.mb-0.bg-light
+                    div.m-2
+                        h4.p-3 Learning Outcomes:
+                        ul#learningOutcomes.list-group
+            .col.mt-5
+                div.mt-5
+                    .d-flex.justify-content-between.p-1.m-1.mt-5
+                        h4.p-3 Modules:
+                        a#mostRecentModule.m-2.btn.btn-info(type="button") Go To Last Visited Module
                             i.fas.fa-arrow-circle-right.pl-2
-                    div.border.border-info.p-2
-                        div.border.border-primary(style="height:500px; overflow-y: scroll;")
+                    div.p-2
+                        div.shadow(style="height:500px; overflow-y: scroll;")
                             ul#modulesSection.list-group
+        .row
             .col
                 div
                 .my-3.p-3.bg-white.rounded.box-shadow
                     h3.p-3.mb-2 Account Management:
                     div 
-                        form.border.border-info
-                            .form-group.p-3.text-center
-                                label(for='updateEmailInput') Email address
+                        form.shadow.text-center
+                            .form-group.p-3.text-center.w-75.m-auto
+                                label(for='updateEmailInput') Change your email address
                                 small#updateEmailStatusText.text-danger.d-block
-                                input#updateEmailInput.form-control.m-2(type='email' aria-describedby='emailHelp' placeholder='Enter email')
+                                input#updateEmailInput.form-control.m-2(type='email' aria-describedby='emailHelp' placeholder='Enter new email')
                                 a#updateEmailButton.btn.m-3.btn-primary(type='button') Submit
-                            .form-group.p-3.text-center
-                                label(for='updatePasswordInput') Password
+                            .form-group.p-3.text-center.w-75.m-auto
+                                label(for='updatePasswordInput') Change your password
                                 small#updatePasswordStatusText.text-danger.d-block
-                                input#updatePasswordInput.form-control.m-2(type='password' placeholder='Password')
-                                input#updatePasswordInputRepeat.form-control.m-2(type='password' placeholder='Password Again')
+                                input#updatePasswordInput.form-control.m-2(type='password' placeholder='Enter new password')
+                                input#updatePasswordInputRepeat.form-control.m-2(type='password' placeholder='Enter new password Again')
 
                                 a#updatePasswordButton.btn.m-3.btn-primary(type='button') Submit
+            .col
+                div
+                .my-3.p-3.bg-white.rounded
+                    h3.p-3.mb-2 Community Chat:
+                    div
+                        .shadow 
+                            ul.list-group
+
+
+
+
         .row 
             .col
                 div 
                 .my-3.p-2.bg-white.rounded.box-shadow
                     h3.pb-1 New Content:
 
-                    div.row.border.border-info.p-2.text-center
+                    div.row.p-2.text-center
                         .col-sm-4.text-center
-                            h5 Assembly Line Lab
-                            img.img-fluid.card-body(src='/images/lab1-1.png')
-                            a.btn.btn-primary Go To Lab
+                            div.m-2.card.p-0.shadow
+                                img.img-fluid.card-body.p-0(src='/images/lab1-1.png')
+                                h5 Assembly Line Lab
+                                p.text-muted
+                                    i Learn to use a robotic arm to pick and place objects.
+                                a.btn.btn-primary(href="/users/course/0/0") Go To Lab
                         .col-sm-4.text-center
-                            h5 Maze Traversal Lab
-                            img.img-fluid.card-body(src='/images/lab2-1.png')
-                            a.btn.btn-primary Go To Lab
+                            div.m-2.card.p-0.shadow
+                                img.img-fluid.card-body.p-0(src='/images/lab2-1.png')
+                                h5 Maze Traversal Lab
+                                p.text-muted
+                                    i Create an autonomous maze-solving mobile robot.
+                                a.btn.btn-primary(href="/users/course/1/0") Go To Lab
                         .col-sm-4.text-center
-                            h5 Soccer Free-Shot Lab
-                            img.img-fluid.card-body(src='/images/welcome.jpg')
-                            a.btn.btn-primary Go To Lab
+                            div.m-2.card.p-0.shadow
+                                img.img-fluid.card-body.p-0(src='/images/welcome.jpg')
+                                h5 Soccer Free-Shot Lab
+                                p.text-muted
+                                    i Do soccer
+                                a.btn.btn-primary(href="/users/course/2/0") Go To Lab
 
     script(src='/javascripts/dashboard.js')

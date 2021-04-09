@@ -3,13 +3,15 @@ extends layout
 block content
     i#labModuleInfo(style="display:none;") #{labName},#{labModule}
     .container 
-        div.text-center Labs:
-            select#labsDropdown.my-3.w-100
-        div.text-center Modules:
-            select#modulesDropdown.my-3.w-100
-        div#youtubePlayerSection
+        div.text-center
+            select#labsDropdown.my-3.w-100.p-1.borderless-select.labs-dropdown
+        //- div.text-center Modules:
+        //-     select#modulesDropdown.my-3.w-100
+    .bg-dark.d-flex.justify-content-center
+        div#youtubePlayerSection.w-75
+    div
         div#videoNavigation.my-3.text-center
-
+    .container
         .row.mb-5
             .col-9
                 h5.m-3 Code Snippets: 

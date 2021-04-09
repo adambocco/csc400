@@ -244,8 +244,10 @@ router.post(
         });
       }
       const user = await User.findOne({email: oldEmail});
+      console.log("USER!!!:",user);
       user.email = newEmail;
       await user.save();
+
       const payload = {
         user: {
           id: user.id

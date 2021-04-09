@@ -8,13 +8,15 @@ html
     link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.15.3/css/all.css' integrity='sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk' crossorigin='anonymous')
 
   body
-    nav.navbar.navbar-expand-lg.navbar-light.bg-info
-      a.navbar-brand(href='/') Robot Academy - 
+    nav.navbar.navbar-expand-lg.navbar-light.navbar-bg
+      a.navbar-brand(href='/') 
+        b Robot Academy 
         span#emailDisplayed
       button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarNav.collapse.navbar-collapse
-        ul.navbar-nav
+        div#navLabSelect.m-auto.borderless-select.h4
+        ul.navbar-nav.ml-auto
           li.nav-item.active
             a.nav-link(href='/')
               | Home 
@@ -25,6 +27,8 @@ html
               a#registerNavLink.nav-link(type="button") Register
             li.nav-item
               a#dashboardNavLink.nav-link(type="button") Dashboard
+            li.nav-item
+              a.nav-link(href="/users/course/0/0") Course
             li.nav-item
               a#logoutNavLink.nav-link(type="button") Logout
     script(src='/javascripts/labs.js')

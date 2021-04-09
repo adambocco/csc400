@@ -187,49 +187,59 @@ async function handleUnauthorized() {
 
 
 
-        console.log("USER: ",user)
-        console.log("USER HISTORY: ", userHistory)
-
         let userMostRecent = userHistory.data.mostRecent.split(",");
 
 
 
         let labsDropdown = document.getElementById("labsDropdown");
         let modulesSection = document.getElementById("modulesSection");
-        
-
+        let goal = document.getElementById("goal");
+        let learningOutcomes = document.getElementById("learningOutcomes");
+        // let labName = document.getElementById("labName");
+        let labProgress = document.getElementById("labProgress");
+        let labNumberHeader = document.getElementById("labNumber");
         
         for (let i = 0; i < LABS.length; i++) {
             if (i == parseInt(userMostRecent[0])-1) {
                 let labsDefaultSelection = document.createElement("option");
-                labsDefaultSelection.innerText ="Lab " + userMostRecent[0] + " : " + LABS[parseInt(userMostRecent[0])-1][0]
+                labsDefaultSelection.innerText = LABS[parseInt(userMostRecent[0])-1][0]
                 labsDefaultSelection.selected = "selected"
                 labsDropdown.appendChild(labsDefaultSelection)
                 
             } else {
                 let labSelection = document.createElement("option");
-                labSelection.innerText = "Lab " + (i+1) + " : " +LABS[i][0]
+                labSelection.innerHTML = LABS[i][0]
                 labsDropdown.appendChild(labSelection)
             }
         }
         
         labsDropdown.addEventListener('change', (event)=> {
-            changeLab(event.target.value.split(" : ")[1])
+            changeLab(event.target.value)
         })
         
+
         function changeLab(lab) {
+            let progressNumerator = 0;
+            let progressDenominator = 0;
+            
             modulesSection.innerHTML = "";
             for (let i = 0; i < LABS.length; i++) {
                 if (lab == LABS[i][0]) {
+                    // labName.innerHTML = lab;
+
+                    labNumberHeader.innerHTML = "Lab " + (i + 1) + ":"
+
+                    console.log("CURRENT LAB: ", lab)
                     for (let j = 0; j < LABS[i][1].length; j++) {
                         let moduleListing = document.createElement("li");
-                        moduleListing.className = "list-group-item d-flex"
+                        moduleListing.className = "list-group-item d-flex h5 mb-0 border-bottom"
 
-                        console.log("MODULE#: "+j)
                         if (parseInt(userHistory.data["lab"+(i+1)]) & Math.pow(2, j+1) ) {
-                            moduleListing.className += " bg-info"
+                            moduleListing.className += " list-group-item-secondary"
+                            moduleListing.style.border = "none";
+                            progressNumerator++;
                         }
-
+                        progressDenominator++;
                         moduleListing.innerText = LABS[i][2][j]
         
                         let goToModuleLink = document.createElement("a")
@@ -246,7 +256,28 @@ async function handleUnauthorized() {
         
                         modulesSection.appendChild(moduleListing);
                     }
+
+                    goal.innerHTML = LABS[i][5];
+                    learningOutcomes.innerHTML = "";
+
+                     for (let j = 0; j < LABS[i][6].length; j++) {
+                         let learningOutcome = document.createElement("li");
+                         learningOutcome.className = "list-group-item list-group-item-" + (j%2 == 0 ? "light" : "secondary");
+                         learningOutcome.innerHTML = LABS[i][6][j];
+                         learningOutcomes.appendChild(learningOutcome);
+                     }
                 }
+            }
+            labProgressPercentage = parseInt((progressNumerator / progressDenominator)*100);
+            labProgress.innerHTML = labProgressPercentage + "%";
+            labProgress.setAttribute("aria-valuenow", labProgressPercentage);
+            labProgress.style.width = labProgressPercentage + "%";
+            if (labProgressPercentage == 100) {
+                labProgress.innerHTML = "Lab Completed!"
+                labProgress.className = "progress-bar progress-bar-striped bg-success";
+            } 
+            else {
+                labProgress.className = "progress-bar progress-bar-striped"
             }
         }
         
