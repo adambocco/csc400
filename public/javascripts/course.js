@@ -10,7 +10,7 @@ console.log("module number: ", moduleNumber)
 let youtubePlayer = document.createElement("iframe")
 youtubePlayer.setAttribute("src", "https://www.youtube.com/embed/"+LABS[labNumber][1][moduleNumber])
 youtubePlayer.setAttribute("frameborder","0")
-youtubePlayer.setAttribute("allow","accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture")
+youtubePlayer.setAttribute("allow","fullscreen; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;")
 
 
 let youtubePlayerContainer = document.createElement("div")
@@ -22,6 +22,9 @@ youtubePlayerSection.appendChild(youtubePlayerContainer);
 
 // <---- Video Navigation ---->
 let videoNavigation = document.getElementById("videoNavigation");
+
+
+let codeSection = document.getElementById("codeSection");
 
 let leftNav = document.createElement("a");
 if ( moduleNumber > 0 ) {
@@ -49,6 +52,11 @@ for (let i = 0; i < LABS[labNumber][2].length; i++) {
         modulesDefaultSelection.selected = "selected"
         modulesDefaultSelection.className = ""
         selectModuleDropdown.appendChild(modulesDefaultSelection)
+
+        // <--- Code Snippets --->
+        console.log("ADDING CODE SNIPPET!!",LABS[labNumber][3][moduleNumber])
+        codeSection.innerHTML = LABS[labNumber][3][moduleNumber]
+
         continue
     }
     let moduleSelection = document.createElement("option");
@@ -76,6 +84,8 @@ videoNavigation.appendChild(rightNav)
 
 let navLabSelect = document.getElementById("navLabSelect");
 let labsDropdown = document.getElementById("labsDropdown");
+
+
 // let modulesDropdown = document.getElementById("modulesDropdown");
 
 
@@ -85,11 +95,14 @@ for (let i = 0; i < LABS.length; i++) {
         labsDefaultSelection.innerText = "Lab " +(parseInt(labNumber)+1) + ": " + LABS[labNumber][0]
         labsDefaultSelection.selected = "selected"
         labsDropdown.appendChild(labsDefaultSelection)
+
         continue;
     }
     let labSelection = document.createElement("option");
     labSelection.innerText = "Lab " + (i + 1) + ": " + LABS[i][0]
     labsDropdown.appendChild(labSelection)
+
+
 }
 
 
@@ -118,6 +131,8 @@ for (let i = 0; i < LABS[labNumber][4].length; i++) {
 resourcesDropdown.addEventListener('change', (event)=> {
     downloadResourcesButton.href = "/resources/"+resourcesDropdown.value
 })
+
+
 
 setTimeout(async ()=> {
     try {

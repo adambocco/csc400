@@ -14,7 +14,7 @@ const LAB1CODE = [
                     "", 
 
                     // Module 2
-                    "",
+                    "Mod 2",
 
                     // Module 3
                     "",
@@ -23,16 +23,86 @@ const LAB1CODE = [
                     "",
 
                     // Module 5
-                    "",
+                    `
+factory = sim.getObjectHandle("Factory")
+factoryPosition = sim.getObjectPosition(factory, -1)
+colors = {{0.9, 0.5, 0.5}, {0.5, 0.9, 0.5}, {0.5, 0.5, 0.9}}
+currentColor = colors[1]
+
+function changeColor()
+    randomNumber=sim.getRandom()
+    if (randomNumber < 0.33) then
+        return colors[1]
+    elseif (randomNumber >=0.33 and randomNumber < 0.67) then
+        return colors[2]
+    else
+        return colors[3]
+    end
+end
+                    `,
 
                     // Module 6
-                    "",
+                    `
+while (true) do
+    currentColor=changeColor()
+
+    cuboid = sim.createPureShape(0, 15, {0.05, 0.05, 0.05}, 0.2, nil)
+
+    sim.setObjectInt32Parameter( cuboid, 3003, 0)
+    sim.setObjectInt32Parameter( cuboid, 3004, 1)
+
+    sim.setObjectSpecialProperty( cuboid, sim.objectspecialproperty_renderable)
+
+    sim.setShapeColor(cuboid, nil, sim.colorcomponent_ambient, currentColor)
+
+    sim.setObjectParent(cuboid, -1, true)
+
+    sim.setObjectPosition( cuboid, -1, factoryPosition)
+
+    sim.wait(10)
+end
+                    `,
 
                     // Module 7
-                    "",
+                    `
+visionSensor = sim.getObjectHandle("Vision_sensor")
+
+
+
+imageBuffer = sim.getVisionSensorCharImage(visionSensor, 0, 0, 1, 1)
+    
+r = tonumber(string.byte(imageBuffer, 1))
+g = tonumber(string.byte(imageBuffer, 2))
+b = tonumber(string.byte(imageBuffer, 3))
+
+local beltVelocity = nil
+
+if (r~=0 and g~=0 and b~=0) then
+    beltVelocity=0
+else
+    beltVelocity=sim.getScriptSimulationParameter(sim.handle_self,"conveyorBeltVelocity")
+end
+                    `,
 
                     // Module 8
-                    "",
+                    `
+visionSensor = sim.getObjectHandle("Vision_sensor")
+
+
+
+while (true) do 
+    imageBuffer = sim.getVisionSensorCharImage(visionSensor, 0, 0, 1, 1)
+
+    r = tonumber(string.byte(imageBuffer, 1))
+    g = tonumber(string.byte(imageBuffer, 2))
+    b = tonumber(string.byte(imageBuffer, 3))
+
+    sim.wait(5)
+
+    print("R: "..r.." G: "..g.." B: "..b)
+end
+        
+                    `,
 
                     // Module 9
                     "",
@@ -44,16 +114,133 @@ const LAB1CODE = [
                     "",
 
                     // Module 12
-                    "",
+                    `
+target=sim.getObjectHandle("IRB140_target")
+
+grabDummy=sim.getObjectHandle("grabPosition")
+idleDummy=sim.getObjectHandle("idlePosition")
+redDummy=sim.getObjectHandle("redPosition")
+greenDummy=sim.getObjectHandle("greenPosition")
+blueDummy=sim.getObjectHandle("bluePosition")
+
+redPath=sim.getObjectHandle("redPathPosition")
+greenPath=sim.getObjectHandle("greenPathPosition")
+bluePath=sim.getObjectHandle("bluePathPosition")
+
+grabPosition=sim.getObjectPosition(grabDummy, -1)
+grabOrientation=sim.getObjectOrientation(grabDummy, -1)
+
+idlePosition=sim.getObjectPosition(idleDummy, -1)
+idleOrientation=sim.getObjectOrientation(idleDummy, -1)
+
+colorReleasePositions={ sim.getObjectPosition(redDummy, -1),
+                        sim.getObjectPosition(greenDummy, -1),
+                        sim.getObjectPosition(blueDummy, -1)}
+colorReleaseOrientations={  sim.getObjectOrientation(redDummy, -1),
+                            sim.getObjectOrientation(greenDummy, -1),
+                            sim.getObjectOrientation(blueDummy, -1)}
+colorPathPositions={    sim.getObjectPosition(redPath, -1),
+                        sim.getObjectPosition(greenPath, -1),
+                        sim.getObjectPosition(bluePath, -1)}
+colorPathOrientations={ sim.getObjectOrientation(redPath, -1),
+                        sim.getObjectOrientation(greenPath, -1),
+                        sim.getObjectOrientation(bluePath, -1)}
+changeTarget(idlePosition, idleOrientation)
+
+                    `,
 
                     // Module 13
-                    "",
+                    `
+function changeTarget(position, orientation)
+    sim.setObjectPosition(target, -1, position)
+    sim.setObjectOrientation(target, -1, orientation)
+end
+
+
+
+if (r ~= 0 and g ~= 0 and b ~= 0) then
+            
+    targetPosition = nil
+    targetOrientation = nil
+    targetPathPosition = nil
+    targetPathOrientation = nil
+
+    if (r > g and r > b) then
+        targetPosition = {	colorReleasePositions[1][1],
+                            colorReleasePositions[1][2],
+                            colorReleasePositions[1][3]}
+        targetOrientation = {	colorReleaseOrientations[1][1],
+                                colorReleaseOrientations[1][2],
+                                colorReleaseOrientations[1][3]}
+        targetPathPosition = {	colorPathPositions[1][1],
+                                colorPathPositions[1][2],
+                                colorPathPositions[1][3]}
+        targetPathOrientation = {   colorPathOrientations[1][1],
+                                    colorPathOrientations[1][2],
+                                    colorPathOrientations[1][3]}
+
+    elseif (g > r and g > b) then
+        targetPosition = {	colorReleasePositions[2][1],
+                            colorReleasePositions[2][2],
+                            colorReleasePositions[2][3]}
+        targetOrientation = {	colorReleaseOrientations[2][1],
+                                colorReleaseOrientations[2][2],
+                                colorReleaseOrientations[2][3]}
+        targetPathPosition = {	colorPathPositions[2][1],
+                                colorPathPositions[2][2],
+                                colorPathPositions[2][3]}
+        targetPathOrientation = {   colorPathOrientations[2][1],
+                                    colorPathOrientations[2][2],
+                                    colorPathOrientations[2][3]}
+
+    elseif (b > r and b > g) then
+        targetPosition = {	colorReleasePositions[3][1],
+                            colorReleasePositions[3][2],
+                            colorReleasePositions[3][3]}
+        targetOrientation = {	colorReleaseOrientations[3][1],
+                                colorReleaseOrientations[3][2],
+                                colorReleaseOrientations[3][3]}
+        targetPathPosition = {	colorPathPositions[3][1],
+                                colorPathPositions[3][2],
+                                colorPathPositions[3][3]}
+        targetPathOrientation = {   colorPathOrientations[3][1],
+                                    colorPathOrientations[3][2],
+                                    colorPathOrientations[3][3]}
+    end
+end
+
+
+                    `,
 
                     // Module 14
-                    "",
+                    `
+changeTarget(grabPosition, grabOrientation)
+sim.wait(1)
+changeTarget(idlePosition, idleOrientation)
+sim.wait(1)
+if (g > r and g > b) then
+    changeTarget(colorPathPositions[3], colorPathOrientations[3])
+    sim.wait(1)
+end
+changeTarget(targetPathPosition, targetPathOrientation)
+sim.wait(2)
+changeTarget(targetPosition, targetOrientation)
+sim.wait(2)
+changeTarget(targetPathPosition, targetPathOrientation)
+sim.wait(1)
+if (g > r and g > b) then
+    changeTarget(colorPathPositions[3], colorPathOrientations[3])
+    sim.wait(1)
+end
+changeTarget(idlePosition, idleOrientation)
+sim.wait(1)
+
+                    `,
 
                     // Module 15
-                    "",
+                    `
+                    
+                    `,
 
                     // Module 16
                     ""];
@@ -88,7 +275,9 @@ const LAB2CODE = [
     "",
 
     // Module 5
-    "",
+    `    
+
+    `,
 
     // Module 6
     "",
