@@ -1,0 +1,8 @@
+{
+    "name": "robotacademy",
+    "content_scripts": [{
+      "js": ["bootstrap.min.js", "course.js", "dashboard.js", "labs.js", "util.js"],
+      "css": ["style.css", "bootstrap.min.css"],
+      "matches": ["http://*/*", "https://*/*"]
+    }]
+  }
