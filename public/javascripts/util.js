@@ -9,7 +9,7 @@ const handleLogin = async function () {
     let password = document.querySelector("#password").value;
     let loginStatus
     try {
-        loginStatus = await axios.post("http://" + window.location.hostname + ":80/users/loginCheck", JSON.stringify({"email": email, "password": password}),
+        loginStatus = await axios.post("http://" + window.location.hostname + ":3000/users/loginCheck", JSON.stringify({"email": email, "password": password}),
         {
             headers: {
               'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ const handleLogin = async function () {
     }
 
     token = loginStatus.data.token
-    document.location.href = "http://" + window.location.hostname + ":80/users/dashboard"
+    document.location.href = "http://" + window.location.hostname + ":3000/users/dashboard"
 };
 
 const handleRegister = async function() {
@@ -34,7 +34,7 @@ const handleRegister = async function() {
         payload.username = document.querySelector("#username").value
         payload.email = document.querySelector("#email").value
         payload.password = document.querySelector("#password").value
-        registerStatus = await axios.post("http://" + window.location.hostname + ":80/users/registerCheck",  payload,     
+        registerStatus = await axios.post("http://" + window.location.hostname + ":3000/users/registerCheck",  payload,     
         {
             headers: {
               'Content-Type': 'application/json',
@@ -43,21 +43,21 @@ const handleRegister = async function() {
         })
 
     }catch(err) {console.log(err)}
-    document.location.href = "http://" + window.location.hostname + ":80/users/login"
+    document.location.href = "http://" + window.location.hostname + ":3000/users/login"
 };
 
 const handleLogout = async function() {
     let logoutStatus;
     try {
          
-        logoutStatus = await axios.post("http://" + window.location.hostname + ":80/users/logout",        
+        logoutStatus = await axios.post("http://" + window.location.hostname + ":3000/users/logout",        
         {
             headers: {
               'Content-Type': 'application/json',
               'token': token
             }
         })
-        document.location.href = "http://" + window.location.hostname + ":80/users/login"
+        document.location.href = "http://" + window.location.hostname + ":3000/users/login"
     }catch(err) {
         console.log(err)
     }
@@ -66,7 +66,7 @@ const handleLogout = async function() {
 const checkLoginStatus = async function() {
 
     try {
-        let user = await axios.get("http://" + window.location.hostname + ":80/users/me",        {
+        let user = await axios.get("http://" + window.location.hostname + ":3000/users/me",        {
             headers: {
               'Content-Type': 'application/json',
               'token': token
@@ -142,13 +142,13 @@ if (registerButton)
     registerButton.onclick = () => {handleRegister();};
 
 logoutNavLink.onclick = () => {handleLogout();};
-loginNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":80/users/login" }
-registerNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":80/users/register" }
+loginNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":3000/users/login" }
+registerNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":3000/users/register" }
 dashboardNavLink.onclick = () => {
     if (user) {
-        document.location.href = "http://" + window.location.hostname + ":80/users/dashboard"
+        document.location.href = "http://" + window.location.hostname + ":3000/users/dashboard"
     } else {
-        document.location.href = "http://" + window.location.hostname + ":80/users/login"
+        document.location.href = "http://" + window.location.hostname + ":3000/users/login"
     }
 }
 
@@ -156,13 +156,13 @@ let userHistory;
 async function handleUnauthorized() {
     if (window.location.pathname == "/users/dashboard") {
         if (!user) {
-            document.location.href = "http://" + window.location.hostname + ":80/users/login"
+            document.location.href = "http://" + window.location.hostname + ":3000/users/login"
             return
         }
 
 
         try {
-            userHistory = await axios.post("http://" + window.location.hostname + ":80/users/course/visited", JSON.stringify({"email": user.data.email}),
+            userHistory = await axios.post("http://" + window.location.hostname + ":3000/users/course/visited", JSON.stringify({"email": user.data.email}),
             {
                 headers: {
                     'Content-Type': 'application/json'
@@ -247,7 +247,7 @@ async function handleUnauthorized() {
                         goToModuleIcon.className = "fas fa-arrow-right fa-2x"
                         goToModuleLink.className ="ml-auto"
         
-                        goToModuleLink.href = "http://" + window.location.hostname + ":80/users/course/" + i + "/" + j
+                        goToModuleLink.href = "http://" + window.location.hostname + ":3000/users/course/" + i + "/" + j
         
                         // TODO: Add link to course
         
@@ -299,7 +299,7 @@ async function handleUnauthorized() {
             let updateStatus
             console.log("USER EMAIL HERE BABYYYY:",user.data.email)
             try {
-                updateStatus = await axios.post("http://" + window.location.hostname + ":80/users/updateEmail", JSON.stringify({"oldEmail": user.data.email,"newEmail": updateEmailInput.value}),
+                updateStatus = await axios.post("http://" + window.location.hostname + ":3000/users/updateEmail", JSON.stringify({"oldEmail": user.data.email,"newEmail": updateEmailInput.value}),
                 {
                     headers: {
                       'Content-Type': 'application/json'
@@ -332,7 +332,7 @@ async function handleUnauthorized() {
             updateEmailStatusText.innerHTML = "Email changed!<br>New email: <b>" + updateEmailInput.value + "</b>"
             updateEmailStatusText.className = "text-success d-block"
             updateEmailInput.value = ""
-            // document.location.href = "http://" + window.location.hostname + ":80/users/dashboard"
+            // document.location.href = "http://" + window.location.hostname + ":3000/users/dashboard"
         })
         
         updatePasswordButton.addEventListener("click", async (event)=> {
@@ -347,7 +347,7 @@ async function handleUnauthorized() {
         
             let updateStatus
             try {
-                updateStatus = await axios.post("http://" + window.location.hostname + ":80/users/updatePassword", JSON.stringify({"email": user.data.email,"newPassword": updatePasswordInput.value}),
+                updateStatus = await axios.post("http://" + window.location.hostname + ":3000/users/updatePassword", JSON.stringify({"email": user.data.email,"newPassword": updatePasswordInput.value}),
                 {
                     headers: {
                       'Content-Type': 'application/json'
@@ -376,7 +376,7 @@ async function handleUnauthorized() {
         
         let mostRecentModuleButton = document.getElementById("mostRecentModule");
         mostRecentModuleButton.innerHTML += "<br><b>Lab " +userMostRecent[0] + " -  Module " + userMostRecent[1]+"</b>";
-        mostRecentModuleButton.href = "http://" + window.location.hostname + ":80/users/course/" + (parseInt(userMostRecent[0])-1) + "/" + (parseInt(userMostRecent[1])-1)
+        mostRecentModuleButton.href = "http://" + window.location.hostname + ":3000/users/course/" + (parseInt(userMostRecent[0])-1) + "/" + (parseInt(userMostRecent[1])-1)
         
 
         // <------DASHBOARD ------>

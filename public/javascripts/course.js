@@ -28,7 +28,7 @@ let codeSection = document.getElementById("codeSection");
 
 let leftNav = document.createElement("a");
 if ( moduleNumber > 0 ) {
-    leftNav.href = "http://" + window.location.hostname + ":80/users/course/" + labNumber + "/" + (parseInt(moduleNumber)-1)
+    leftNav.href = "http://" + window.location.hostname + ":3000/users/course/" + labNumber + "/" + (parseInt(moduleNumber)-1)
 }
 let leftNavIcon = document.createElement("i");
 leftNavIcon.className = "fas fa-arrow-circle-left fa-3x"
@@ -69,7 +69,7 @@ for (let i = 0; i < LABS[labNumber][2].length; i++) {
 
 let rightNav = document.createElement("a");
 if ( moduleNumber < LABS[labNumber][1].length - 1 ) {
-    rightNav.href = "http://" + window.location.hostname + ":80/users/course/" + labNumber + "/" + (parseInt(moduleNumber)+1)
+    rightNav.href = "http://" + window.location.hostname + ":3000/users/course/" + labNumber + "/" + (parseInt(moduleNumber)+1)
 }
 let rightNavIcon = document.createElement("i");
 rightNavIcon.className = "fas fa-arrow-circle-right fa-3x"
@@ -111,12 +111,12 @@ navLabSelect.appendChild(labsDropdown);
 
 labsDropdown.addEventListener('change', (event)=> {
     let newLabNumber = parseInt(event.target.value.split(":")[0].split(" ")[1]) -1;
-    document.location.href = "http://" + window.location.hostname + ":80/users/course/" + newLabNumber + "/0"
+    document.location.href = "http://" + window.location.hostname + ":3000/users/course/" + newLabNumber + "/0"
 })
 
 selectModuleDropdown.addEventListener('change', (event)=> {
     let newModuleNumber = parseInt(event.target.value) - 1
-    document.location.href = "http://" + window.location.hostname + ":80/users/course/" + labNumber + "/" + newModuleNumber
+    document.location.href = "http://" + window.location.hostname + ":3000/users/course/" + labNumber + "/" + newModuleNumber
 })
 
 let resourcesDropdown = document.getElementById("resourcesDropdown")
@@ -136,7 +136,7 @@ resourcesDropdown.addEventListener('change', (event)=> {
 
 setTimeout(async ()=> {
     try {
-        userHistory = await axios.post("http://" + window.location.hostname + ":80/users/course/visit", JSON.stringify({"email": user.data.email, "labNumber": labNumber, "moduleNumber": moduleNumber}),
+        userHistory = await axios.post("http://" + window.location.hostname + ":3000/users/course/visit", JSON.stringify({"email": user.data.email, "labNumber": labNumber, "moduleNumber": moduleNumber}),
         {
             headers: {
                 'Content-Type': 'application/json'
