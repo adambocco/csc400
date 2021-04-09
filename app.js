@@ -46,4 +46,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+if (app.get("env") === "production") {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
+
 module.exports = app;
