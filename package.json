@@ -12,6 +12,7 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
+    "enforce": "^0.1.7",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "express-validator": "^6.10.0",
