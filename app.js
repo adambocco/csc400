@@ -19,7 +19,9 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
+app.use('/images',express.static(path.join(__dirname, 'public/images')));
+app.use('/javascripts',express.static(path.join(__dirname, 'public/javascripts')));
+app.use('/stylesheets',express.static(path.join(__dirname, 'public/stylesheets')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression());
 app.use(helmet());
