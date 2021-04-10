@@ -8,6 +8,8 @@ const authRedirect = require("../middleware/authRedirect")
 
 const User = require("../models/user");
 const History = require("../models/history");
+const Chat = require("../models/chat");
+const Subject = require("../models/subject");
 
 
 router.get('/', function(req, res, next) {
@@ -20,12 +22,106 @@ router.get('/dashboard', function(req, res, next) {
 
 });
 
-router.post('/dashboardAuth', authRedirect, function(req, res, next) {
-  if (req.user) {
-    res.redirect("/dashboard");
-  } else {
-    res.redirect("/login");
+
+router.get('/communitychat', function(req, res, next) {
+
+  res.render('communitychat', { title: 'Express' });
+
+});
+
+router.post('/communitychat/usersubjects', async function(req, res, next) {
+  const {email} = req.body;
+  try {
+    let subjects = await Subject.find({
+      author: email
+    });
+
+    res.status(200).json({subjects:subjects});
   }
+  catch (error) {
+    res.status(500).send("Error in Creating Subject");
+  }
+})
+
+
+
+router.get('/communitychat/subjects', async function(req, res, next) {
+  try {
+    let subjects = await Subject.find();
+
+    res.status(200).json({status:subjects})
+  }
+  catch (error) {
+    res.status(500).send("Error in Fetching Subjects");
+  }
+})
+
+router.post('/communitychat/subject', async function(req, res, next) {
+  const {subject} = req.body;
+  try {
+    let allChat = await Chat.find({
+      subject : subject
+    });
+
+    res.status(200).json({chats:allChat});
+
+  }
+  catch (error) {
+    res.status(500).send("Error in Creating Subject");
+  }
+})
+
+router.post('/communitychat/postsubject', async function(req, res, next) {
+  const {author,subject,body} = req.body;
+  
+  try {
+    let newSubject = await Subject.findOne({
+      subject : subject
+    });
+
+    if (newSubject) {
+      res.status(400).json({subject:"failed"})
+      return
+    }
+
+    newSubject = new Subject({
+        author: author,
+        subject: subject,
+        body: body
+    });
+
+
+    newSubject.save()
+    res.status(200).json({subject:newSubject})
+  }
+  catch (error) {
+    res.status(500).send("Error in Creating Subject");
+  }
+})
+
+router.post('/communitychat/postchat', function(req, res, next) {
+  const {author,subject,body} = req.body;
+  try {
+    
+    let chat = new Chat({
+      author: author,
+      subject: subject,
+      body: body
+    });
+    chat.save()
+    res.status(200).json({"chat":chat})
+  }
+  catch (error) {
+    res.status(500).send("Error in Fetching Subjects");
+  }
+})
+
+router.post('/dashboardAuth', authRedirect, function(req, res, next) {
+if (req.user) {
+  res.redirect("/dashboard");
+} else {
+  res.redirect("/login");
+}
 })
 
 router.get('/login', function(req, res, next) {

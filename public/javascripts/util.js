@@ -3,6 +3,7 @@ console.log("UTILS LOADED")
 let emailDisplayed = document.getElementById("emailDisplayed");
 let user = false;
 
+
 let token = null;
 const handleLogin = async function () {
     let email = document.querySelector("#email").value;
@@ -152,6 +153,7 @@ dashboardNavLink.onclick = () => {
     }
 }
 
+
 let userHistory;
 async function handleUnauthorized() {
     if (window.location.pathname == "/users/dashboard") {
@@ -198,6 +200,32 @@ async function handleUnauthorized() {
         // let labName = document.getElementById("labName");
         let labProgress = document.getElementById("labProgress");
         let labNumberHeader = document.getElementById("labNumber");
+
+        let dashboardCommunityChat = document.getElementById("dashboardCommunityChat");
+        let userSubjects;
+        try {
+            userSubjects = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/usersubjects", JSON.stringify({"email": user.data.email}),
+            {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+            });
+            console.log(userSubjects);
+
+            for (let n = 0; n < userSubjects.data.subjects.length; n++) {
+                let li = document.createElement("li")
+                li.className = "list-group-item m-1 p-1"
+                li.innerHTML = "<div class='h4'>" + userSubjects.data.subjects[n].subject + "</div>" +
+                "<div class='text-muted'>" + userSubjects.data.subjects[n].author + "</div>" +
+                "<div class='text-muted'>" + userSubjects.data.subjects[n].createdAt + "</div> <br>"
+                dashboardCommunityChat.appendChild(li)
+            }
+
+
+        } catch (err) {
+            console.log(err)
+        }
+
         
         for (let i = 0; i < LABS.length; i++) {
             if (i == parseInt(userMostRecent[0])-1) {
@@ -383,6 +411,7 @@ async function handleUnauthorized() {
 
 
 
+        
 
 
 
@@ -393,7 +422,181 @@ async function handleUnauthorized() {
 
 
 
+    }
+    if (window.location.pathname == "/users/communitychat") {
+        let subjectsList = document.getElementById("subjectsList");
+        let backToSubjectsButton = document.getElementById("backToSubjectsButton");
+        let communityChatHeader = document.getElementById("communityChatHeader");
+        let openPostSubjectButton = document.getElementById("openPostSubjectButton");
+        let openPostChatButton = document.getElementById("openPostChatButton");
+        let postSubjectSection = document.getElementById("postSubjectSection");
+        let postChatSection = document.getElementById("postChatSection");
+        let subjectBody = document.getElementById("subjectBody");
+        let authorSection = document.getElementById("authorSection");
+        let subjectDateCreated = document.getElementById("subjectDateCreated");
+        let postSubjectSubjectSection = document.getElementById("postSubjectSubjectSection");
+        let postSubjectBodySection = document.getElementById("postSubjectBodySection");
+        let postChatBodySection = document.getElementById("postChatBodySection");
+        let postSubjectButton = document.getElementById("postSubjectButton");
+        let postChatButton = document.getElementById("postChatButton");
 
+        postChatSection.style.display = "none";
+        postSubjectSection.style.display = "none";
+        openPostSubjectButton.style.display = "inline-block"
+        openPostChatButton.style.display = "none";
+
+
+        postSubjectButton.addEventListener("click", async ()=> {
+            let body = postSubjectBodySection.value;
+            let sbj = postSubjectSubjectSection.value;
+            let response;
+            try {
+                response = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/postsubject", {author: user.data.email ,subject: sbj , "body": body},
+                {
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                });
+                console.log(response)
+                location.reload();
+            } catch (err) {
+                console.log(err)
+            }
+        })
+
+        openPostChatButton.addEventListener("click", ()=> {
+            if (!user) {
+                document.location.href = "http://" + window.location.hostname + ":80/users/login"
+                return
+            } 
+            if (openPostChatButton.className == "btn btn-outline-success float-right") {
+                postChatSection.style.display = "block"
+                openPostChatButton.className = "btn btn-outline-danger float-right"
+                openPostChatButton.innerHTML = "<i class='fas fa-minus-circle'></i>"
+            } else {
+                postChatSection.style.display = "none"
+                openPostChatButton.className = "btn btn-outline-success float-right"
+                openPostChatButton.innerHTML = "<i class='fas fa-plus-circle'></i>"
+            }
+        })
+
+        openPostSubjectButton.addEventListener("click", ()=> {
+            if (!user) {
+                document.location.href = "http://" + window.location.hostname + ":80/users/login"
+                return
+            } 
+            if (openPostSubjectButton.className == "btn btn-outline-success float-right") {
+                postSubjectSection.style.display = "block"
+                openPostSubjectButton.className = "btn btn-outline-danger float-right"
+                openPostSubjectButton.innerHTML = "<i class='fas fa-minus-circle'></i>"
+            } else {
+                postSubjectSection.style.display = "none"
+                openPostSubjectButton.className = "btn btn-outline-success float-right"
+                openPostSubjectButton.innerHTML = "<i class='fas fa-plus-circle'></i>"
+            }
+        })
+
+        let subjectsResponse;
+        try {
+            subjectsResponse = await axios.get("http://" + window.location.hostname + ":80/users/communitychat/subjects",
+            {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+            });
+            console.log(subjectsResponse)
+        } catch (err) {
+            console.log(err)
+
+        }
+
+        for (let i = 0; i < subjectsResponse.data.status.length; i++) {
+            let sub = document.createElement("li");
+            sub.className = "list-group-item";
+            let currentSubject = subjectsResponse.data.status[i].subject
+            sub.innerHTML = "<div class='h3'>" + subjectsResponse.data.status[i].subject + "</div>" +
+                            "<div class='lead'>" + subjectsResponse.data.status[i].body + "</div>" +
+                            "<div class='text-muted'>" + subjectsResponse.data.status[i].author + "</div>" +
+                            "<div class='text-muted'>" + subjectsResponse.data.status[i].createdAt + "</div> <br>"
+                            
+
+
+
+            sub.addEventListener("click", async (ev)=> {
+                let subj = currentSubject
+
+
+                subjectBody.innerHTML = subjectsResponse.data.status[i].body
+                authorSection.innerHTML = subjectsResponse.data.status[i].author
+                subjectDateCreated.innerHTML = subjectsResponse.data.status[i].createdAt
+
+
+                let subjectResponse;
+                try {
+                    subjectResponse = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/subject", {subject: subj},
+                    {
+                        headers: {
+                          'Content-Type': 'application/json'
+                        }
+                    });
+                    console.log(subjectResponse)
+                    subjectsList.innerHTML = "";
+                    for (let j = 0; j < subjectResponse.data.chats.length; j++) {
+                        let subb = document.createElement("li");
+                        subb.className = "list-group-item";
+                        subb.innerHTML = "<div class='lead'>" + subjectResponse.data.chats[j].body + "</div>" + 
+                                        "<div class='text-muted'>" + subjectResponse.data.chats[j].author + "<div>" +
+                                        "<div class='text-muted float-right'>" + subjectResponse.data.chats[j].createdAt + "<div>";
+                        subjectsList.appendChild(subb);
+                    }
+
+
+                } catch (err) {
+                    console.log(err)
+                }
+
+                backToSubjectsButton.className = "btn btn-outline-primary"
+                communityChatHeader.innerHTML = subj;
+
+                postChatSection.style.display = "none";
+                postSubjectSection.style.display = "none";
+                openPostSubjectButton.style.display = "none"
+                openPostChatButton.style.display = "inline-block";
+
+
+                postChatButton.addEventListener("click", async ()=> {
+                    let body = postChatBodySection.value;
+                    let response;
+                    try {
+                        response = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/postchat", {author: user.data.email ,subject: currentSubject, "body": body},
+                        {
+                            headers: {
+                              'Content-Type': 'application/json'
+                            }
+                        });
+                        console.log(response)
+                        let li = document.createElement("li");
+
+                        li.className = "list-group-item";
+                        li.innerHTML = "<div class='lead'>" + response.data.chat.body + "</div>" + 
+                                        "<div class='text-muted'>" + response.data.chat.author + "<div>" +
+                                        "<div class='text-muted float-right'>" + response.data.chat.createdAt + "<div>";
+                        subjectsList.appendChild(li)
+                        openPostChatButton.click()
+                    } catch (err) {
+                        console.log(err)
+                    }
+                })
+
+            })
+
+
+            subjectsList.appendChild(sub);
+        }
+
+        backToSubjectsButton.addEventListener("click", () => {
+            document.location.href = "http://" + window.location.hostname + ":80/users/communitychat"
+        })
     }
 }
 

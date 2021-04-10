@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    div.container.my-3
+        div.row
+            .col
+                div
+                    button#backToSubjectsButton.btn.btn-outline-primary.d-none
+                        i.fas.fa-arrow-left
+                    button#openPostSubjectButton.btn.btn-outline-success.float-right
+                        i.fas.fa-plus-circle
+                    button#openPostChatButton.btn.btn-outline-success.float-right
+                        i.fas.fa-plus-circle
+                h1#communityChatHeader.text-center Community Chat
+                div#subjectBody.lead.text-center
+                div#authorSection.text-muted
+                div#subjectDateCreated.text-muted
+                #postSubjectSection.m-2.p-2.text-center.shadow(style="display:none;")
+                    h2 Post a Thread
+                    form
+                        .form-group.m-2.p-1.w-75.m-auto
+                            input#postSubjectSubjectSection.form-control.m-3(type="text", placeholder="Subject")
+                            textarea#postSubjectBodySection.form-control.m-3(rows='3', placeholder="Type a body.")
+                            button#postSubjectButton.m-3.btn.btn-outline-info(type="button") Submit
+
+                #postChatSection.m-2.p-2.text-center.shadow(style="display:none;")
+                    h2 Post a Response
+                    form
+                        .form-group.m-2.p-1.w-75.m-auto
+                            textarea#postChatBodySection.m-3.form-control(rows='3', placeholder="Type a response.")
+                            button#postChatButton.m-3.btn.btn-outline-info(type="button") Submit
+                ul#subjectsList.list-group

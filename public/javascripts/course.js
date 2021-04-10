@@ -54,7 +54,6 @@ for (let i = 0; i < LABS[labNumber][2].length; i++) {
         selectModuleDropdown.appendChild(modulesDefaultSelection)
 
         // <--- Code Snippets --->
-        console.log("ADDING CODE SNIPPET!!",LABS[labNumber][3][moduleNumber])
         codeSection.innerHTML = LABS[labNumber][3][moduleNumber]
 
         continue
@@ -127,6 +126,7 @@ for (let i = 0; i < LABS[labNumber][4].length; i++) {
     resourceSelection.innerHTML = LABS[labNumber][4][i]
     resourcesDropdown.appendChild(resourceSelection)
 }
+downloadResourcesButton.href = "/resources/"+resourcesDropdown.value
 
 resourcesDropdown.addEventListener('change', (event)=> {
     downloadResourcesButton.href = "/resources/"+resourcesDropdown.value
