@@ -2,7 +2,7 @@ console.log("UTILS LOADED")
 if (typeof variable !== 'undefined') {
     // the variable is defined
 }
-let portNo = 3000
+let portNo = 80
 let emailDisplayed = document.getElementById("emailDisplayed");
 let user = false;
 

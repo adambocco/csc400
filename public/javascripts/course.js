@@ -1,5 +1,5 @@
 
-let portNumber = 3000
+let portNumber = 80
 let youtubePlayerSection = document.getElementById("youtubePlayerSection");
 
 let labModuleInfo = document.getElementById("labModuleInfo").innerHTML.split(',');
