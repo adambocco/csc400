@@ -29,6 +29,11 @@ router.get('/communitychat', function(req, res, next) {
 
 });
 
+router.get('/communitychat/thread/:thread', function(req, res, next) {
+  res.render('communitychat', { thread: req.params.thread });
+
+});
+
 router.post('/communitychat/usersubjects', async function(req, res, next) {
   const {email} = req.body;
   try {

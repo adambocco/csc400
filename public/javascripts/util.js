@@ -1,5 +1,8 @@
 console.log("UTILS LOADED")
-
+if (typeof variable !== 'undefined') {
+    // the variable is defined
+}
+let portNo = 3000
 let emailDisplayed = document.getElementById("emailDisplayed");
 let user = false;
 
@@ -10,7 +13,7 @@ const handleLogin = async function () {
     let password = document.querySelector("#password").value;
     let loginStatus
     try {
-        loginStatus = await axios.post("http://" + window.location.hostname + ":80/users/loginCheck", JSON.stringify({"email": email, "password": password}),
+        loginStatus = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/loginCheck", JSON.stringify({"email": email, "password": password}),
         {
             headers: {
               'Content-Type': 'application/json'
@@ -25,7 +28,7 @@ const handleLogin = async function () {
     }
 
     token = loginStatus.data.token
-    document.location.href = "http://" + window.location.hostname + ":80/users/dashboard"
+    document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/dashboard"
 };
 
 const handleRegister = async function() {
@@ -35,7 +38,7 @@ const handleRegister = async function() {
         payload.username = document.querySelector("#username").value
         payload.email = document.querySelector("#email").value
         payload.password = document.querySelector("#password").value
-        registerStatus = await axios.post("http://" + window.location.hostname + ":80/users/registerCheck",  payload,     
+        registerStatus = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/registerCheck",  payload,     
         {
             headers: {
               'Content-Type': 'application/json',
@@ -44,21 +47,21 @@ const handleRegister = async function() {
         })
 
     }catch(err) {console.log(err)}
-    document.location.href = "http://" + window.location.hostname + ":80/users/login"
+    document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
 };
 
 const handleLogout = async function() {
     let logoutStatus;
     try {
          
-        logoutStatus = await axios.post("http://" + window.location.hostname + ":80/users/logout",        
+        logoutStatus = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/logout",        
         {
             headers: {
               'Content-Type': 'application/json',
               'token': token
             }
         })
-        document.location.href = "http://" + window.location.hostname + ":80/users/login"
+        document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
     }catch(err) {
         console.log(err)
     }
@@ -67,7 +70,7 @@ const handleLogout = async function() {
 const checkLoginStatus = async function() {
 
     try {
-        let user = await axios.get("http://" + window.location.hostname + ":80/users/me",        {
+        let user = await axios.get("http://" + window.location.hostname + ":" + portNo + "/users/me",        {
             headers: {
               'Content-Type': 'application/json',
               'token': token
@@ -143,13 +146,13 @@ if (registerButton)
     registerButton.onclick = () => {handleRegister();};
 
 logoutNavLink.onclick = () => {handleLogout();};
-loginNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":80/users/login" }
-registerNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":80/users/register" }
+loginNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login" }
+registerNavLink.onclick = () => {document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/register" }
 dashboardNavLink.onclick = () => {
     if (user) {
-        document.location.href = "http://" + window.location.hostname + ":80/users/dashboard"
+        document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/dashboard"
     } else {
-        document.location.href = "http://" + window.location.hostname + ":80/users/login"
+        document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
     }
 }
 
@@ -158,13 +161,13 @@ let userHistory;
 async function handleUnauthorized() {
     if (window.location.pathname == "/users/dashboard") {
         if (!user) {
-            document.location.href = "http://" + window.location.hostname + ":80/users/login"
+            document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
             return
         }
 
 
         try {
-            userHistory = await axios.post("http://" + window.location.hostname + ":80/users/course/visited", JSON.stringify({"email": user.data.email}),
+            userHistory = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/course/visited", JSON.stringify({"email": user.data.email}),
             {
                 headers: {
                     'Content-Type': 'application/json'
@@ -201,10 +204,11 @@ async function handleUnauthorized() {
         let labProgress = document.getElementById("labProgress");
         let labNumberHeader = document.getElementById("labNumber");
 
+
         let dashboardCommunityChat = document.getElementById("dashboardCommunityChat");
         let userSubjects;
         try {
-            userSubjects = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/usersubjects", JSON.stringify({"email": user.data.email}),
+            userSubjects = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/communitychat/usersubjects", JSON.stringify({"email": user.data.email}),
             {
                 headers: {
                   'Content-Type': 'application/json'
@@ -213,12 +217,18 @@ async function handleUnauthorized() {
             console.log(userSubjects);
 
             for (let n = 0; n < userSubjects.data.subjects.length; n++) {
+                let atag = document.createElement("a");
+                atag.href = "http://" + window.location.hostname + ":" + portNo + "/users/communitychat/thread/"+userSubjects.data.subjects[n]._id
                 let li = document.createElement("li")
                 li.className = "list-group-item m-1 p-1"
                 li.innerHTML = "<div class='h4'>" + userSubjects.data.subjects[n].subject + "</div>" +
                 "<div class='text-muted'>" + userSubjects.data.subjects[n].author + "</div>" +
-                "<div class='text-muted'>" + userSubjects.data.subjects[n].createdAt + "</div> <br>"
-                dashboardCommunityChat.appendChild(li)
+                "<div class='text-muted'>" + userSubjects.data.subjects[n].createdAt + "</div>" +
+                "<div class='d-none'>" + userSubjects.data.subjects[n]._id + "</div> <br>"
+                atag.appendChild(li)
+                dashboardCommunityChat.appendChild(atag)
+
+
             }
 
 
@@ -275,7 +285,7 @@ async function handleUnauthorized() {
                         goToModuleIcon.className = "fas fa-arrow-right fa-2x"
                         goToModuleLink.className ="ml-auto"
         
-                        goToModuleLink.href = "http://" + window.location.hostname + ":80/users/course/" + i + "/" + j
+                        goToModuleLink.href = "http://" + window.location.hostname + ":" + portNo + "/users/course/" + i + "/" + j
         
                         // TODO: Add link to course
         
@@ -327,7 +337,7 @@ async function handleUnauthorized() {
             let updateStatus
             console.log("USER EMAIL HERE BABYYYY:",user.data.email)
             try {
-                updateStatus = await axios.post("http://" + window.location.hostname + ":80/users/updateEmail", JSON.stringify({"oldEmail": user.data.email,"newEmail": updateEmailInput.value}),
+                updateStatus = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/updateEmail", JSON.stringify({"oldEmail": user.data.email,"newEmail": updateEmailInput.value}),
                 {
                     headers: {
                       'Content-Type': 'application/json'
@@ -360,7 +370,7 @@ async function handleUnauthorized() {
             updateEmailStatusText.innerHTML = "Email changed!<br>New email: <b>" + updateEmailInput.value + "</b>"
             updateEmailStatusText.className = "text-success d-block"
             updateEmailInput.value = ""
-            // document.location.href = "http://" + window.location.hostname + ":80/users/dashboard"
+            // document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/dashboard"
         })
         
         updatePasswordButton.addEventListener("click", async (event)=> {
@@ -375,7 +385,7 @@ async function handleUnauthorized() {
         
             let updateStatus
             try {
-                updateStatus = await axios.post("http://" + window.location.hostname + ":80/users/updatePassword", JSON.stringify({"email": user.data.email,"newPassword": updatePasswordInput.value}),
+                updateStatus = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/updatePassword", JSON.stringify({"email": user.data.email,"newPassword": updatePasswordInput.value}),
                 {
                     headers: {
                       'Content-Type': 'application/json'
@@ -404,7 +414,7 @@ async function handleUnauthorized() {
         
         let mostRecentModuleButton = document.getElementById("mostRecentModule");
         mostRecentModuleButton.innerHTML += "<br><b>Lab " +userMostRecent[0] + " -  Module " + userMostRecent[1]+"</b>";
-        mostRecentModuleButton.href = "http://" + window.location.hostname + ":80/users/course/" + (parseInt(userMostRecent[0])-1) + "/" + (parseInt(userMostRecent[1])-1)
+        mostRecentModuleButton.href = "http://" + window.location.hostname + ":" + portNo + "/users/course/" + (parseInt(userMostRecent[0])-1) + "/" + (parseInt(userMostRecent[1])-1)
         
 
         // <------DASHBOARD ------>
@@ -423,7 +433,10 @@ async function handleUnauthorized() {
 
 
     }
-    if (window.location.pathname == "/users/communitychat") {
+    let pathSplit = window.location.pathname.split("/")
+    let threadObj = {}
+
+    if (pathSplit[1] == "users" && pathSplit[2] == "communitychat") {
         let subjectsList = document.getElementById("subjectsList");
         let backToSubjectsButton = document.getElementById("backToSubjectsButton");
         let communityChatHeader = document.getElementById("communityChatHeader");
@@ -451,7 +464,7 @@ async function handleUnauthorized() {
             let sbj = postSubjectSubjectSection.value;
             let response;
             try {
-                response = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/postsubject", {author: user.data.email ,subject: sbj , "body": body},
+                response = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/communitychat/postsubject", {author: user.data.email ,subject: sbj , "body": body},
                 {
                     headers: {
                       'Content-Type': 'application/json'
@@ -466,39 +479,45 @@ async function handleUnauthorized() {
 
         openPostChatButton.addEventListener("click", ()=> {
             if (!user) {
-                document.location.href = "http://" + window.location.hostname + ":80/users/login"
+                document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
                 return
             } 
             if (openPostChatButton.className == "btn btn-outline-success float-right") {
                 postChatSection.style.display = "block"
                 openPostChatButton.className = "btn btn-outline-danger float-right"
-                openPostChatButton.innerHTML = "<i class='fas fa-minus-circle'></i>"
+                openPostChatButton.innerHTML = "<i class='fas fa-minus-circle'></i> Cancel"
             } else {
                 postChatSection.style.display = "none"
                 openPostChatButton.className = "btn btn-outline-success float-right"
-                openPostChatButton.innerHTML = "<i class='fas fa-plus-circle'></i>"
+                openPostChatButton.innerHTML = "<i class='fas fa-plus-circle'></i> Post a Message"
             }
         })
+        openPostChatButton.className = "btn btn-outline-success float-right"
+        openPostChatButton.innerHTML = "<i class='fas fa-plus-circle'></i> Post a Message"
 
+        
         openPostSubjectButton.addEventListener("click", ()=> {
             if (!user) {
-                document.location.href = "http://" + window.location.hostname + ":80/users/login"
+                document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
                 return
             } 
             if (openPostSubjectButton.className == "btn btn-outline-success float-right") {
                 postSubjectSection.style.display = "block"
                 openPostSubjectButton.className = "btn btn-outline-danger float-right"
-                openPostSubjectButton.innerHTML = "<i class='fas fa-minus-circle'></i>"
+                openPostSubjectButton.innerHTML = "<i class='fas fa-minus-circle'></i> Cancel"
             } else {
                 postSubjectSection.style.display = "none"
                 openPostSubjectButton.className = "btn btn-outline-success float-right"
-                openPostSubjectButton.innerHTML = "<i class='fas fa-plus-circle'></i>"
+                openPostSubjectButton.innerHTML = "<i class='fas fa-plus-circle'></i> Start a Thread"
             }
         })
 
+        openPostSubjectButton.className = "btn btn-outline-success float-right"
+        openPostSubjectButton.innerHTML = "<i class='fas fa-plus-circle'></i> Start a Thread"
+
         let subjectsResponse;
         try {
-            subjectsResponse = await axios.get("http://" + window.location.hostname + ":80/users/communitychat/subjects",
+            subjectsResponse = await axios.get("http://" + window.location.hostname + ":" + portNo + "/users/communitychat/subjects", 
             {
                 headers: {
                   'Content-Type': 'application/json'
@@ -514,26 +533,26 @@ async function handleUnauthorized() {
             let sub = document.createElement("li");
             sub.className = "list-group-item";
             let currentSubject = subjectsResponse.data.status[i].subject
-            sub.innerHTML = "<div class='h3'>" + subjectsResponse.data.status[i].subject + "</div>" +
-                            "<div class='lead'>" + subjectsResponse.data.status[i].body + "</div>" +
-                            "<div class='text-muted'>" + subjectsResponse.data.status[i].author + "</div>" +
-                            "<div class='text-muted'>" + subjectsResponse.data.status[i].createdAt + "</div> <br>"
+            sub.innerHTML = "<div class='h3'><i>Subject: </i><b>" + subjectsResponse.data.status[i].subject + "</b></div>" +
+                            "<div class='lead border border-info p-2 m-3'>" + subjectsResponse.data.status[i].body + "</div>" +
+                            "<div class='font-weight-bold h5 p-2'>Author: " + subjectsResponse.data.status[i].author + "</div>" +
+                            "<div class='text-muted'>Date: " + subjectsResponse.data.status[i].createdAt + "</div> <br>"
                             
 
-
+            threadObj[subjectsResponse.data.status[i]._id] = sub
 
             sub.addEventListener("click", async (ev)=> {
                 let subj = currentSubject
 
 
                 subjectBody.innerHTML = subjectsResponse.data.status[i].body
-                authorSection.innerHTML = subjectsResponse.data.status[i].author
-                subjectDateCreated.innerHTML = subjectsResponse.data.status[i].createdAt
+                authorSection.innerHTML = "Author: " + subjectsResponse.data.status[i].author
+                subjectDateCreated.innerHTML = "Date: "+subjectsResponse.data.status[i].createdAt
 
 
                 let subjectResponse;
                 try {
-                    subjectResponse = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/subject", {subject: subj},
+                    subjectResponse = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/communitychat/subject", {subject: subj},
                     {
                         headers: {
                           'Content-Type': 'application/json'
@@ -543,10 +562,10 @@ async function handleUnauthorized() {
                     subjectsList.innerHTML = "";
                     for (let j = 0; j < subjectResponse.data.chats.length; j++) {
                         let subb = document.createElement("li");
-                        subb.className = "list-group-item";
-                        subb.innerHTML = "<div class='lead'>" + subjectResponse.data.chats[j].body + "</div>" + 
-                                        "<div class='text-muted'>" + subjectResponse.data.chats[j].author + "<div>" +
-                                        "<div class='text-muted float-right'>" + subjectResponse.data.chats[j].createdAt + "<div>";
+                        subb.className = "list-group-item m-2";
+                        subb.innerHTML = "<div class='lead border p-3 m-3'>" + subjectResponse.data.chats[j].body + "</div>" + 
+                                        "<div class='font-weight-bold h5'>Author: " + subjectResponse.data.chats[j].author + "<div>" +
+                                        "<div class='text-muted float-right'>Date: " + subjectResponse.data.chats[j].createdAt + "<div>";
                         subjectsList.appendChild(subb);
                     }
 
@@ -568,7 +587,7 @@ async function handleUnauthorized() {
                     let body = postChatBodySection.value;
                     let response;
                     try {
-                        response = await axios.post("http://" + window.location.hostname + ":80/users/communitychat/postchat", {author: user.data.email ,subject: currentSubject, "body": body},
+                        response = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/communitychat/postchat", {author: user.data.email ,subject: currentSubject, "body": body},
                         {
                             headers: {
                               'Content-Type': 'application/json'
@@ -577,10 +596,10 @@ async function handleUnauthorized() {
                         console.log(response)
                         let li = document.createElement("li");
 
-                        li.className = "list-group-item";
-                        li.innerHTML = "<div class='lead'>" + response.data.chat.body + "</div>" + 
-                                        "<div class='text-muted'>" + response.data.chat.author + "<div>" +
-                                        "<div class='text-muted float-right'>" + response.data.chat.createdAt + "<div>";
+                        li.className = "list-group-item m-2";
+                        li.innerHTML = "<div class='lead border p-3 m-3'>" + response.data.chat.body + "</div>" + 
+                                        "<div class='font-weight-bold h5'>Author: " + response.data.chat.author + "<div>" +
+                                        "<div class='text-muted float-right'>Date: " + response.data.chat.createdAt + "<div>";
                         subjectsList.appendChild(li)
                         openPostChatButton.click()
                     } catch (err) {
@@ -595,8 +614,12 @@ async function handleUnauthorized() {
         }
 
         backToSubjectsButton.addEventListener("click", () => {
-            document.location.href = "http://" + window.location.hostname + ":80/users/communitychat"
+            document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/communitychat"
         })
+
+        if (pathSplit[3] == "thread") {
+            threadObj[pathSplit[4]].click()
+        }
     }
 }
 
