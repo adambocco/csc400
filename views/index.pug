@@ -27,12 +27,41 @@ block content
           div.col.card.m-2
             .card-body
               h4 Connect With Others
-              a.btn.btn-outline-primary.float-right.m-3.p-2.bg-gray(type='button' href='/users/communitychat') Forums
+              a.btn.btn-outline-primary.float-right.m-3.p-2.bg-gray(type='button' href='/users/communitychat') Community Chat
     div.row.mt-3
-      div.col.p-3.text-center
-        h3.mb-2 Why Choose Us?
-        |         The purpose of this application is to allow anyone with the desire to learn robotics simulation an entry-point into this field without any requisite knowledge about it. It will also provide an entry-point for those without the means to pursue higher education in this field or the capital to expend on some of the more expensive robotics learning applications currently on the market.
-        |         Robotics education through robotics simulation will allow those without access to physical robotics hardware to get started using this platform. Children will also be able to use our platform due to its simple interface and accessibility. Robotics education has been proven to increase standardizes testing scores in children and it is important dhat Robot Academy include this audience[REFERENCE]. Youth education of robotics teaches the fundamentals of engineering design, programming, and offers an introduction to the STEM field.
+      div.col.p-3.text-center.d-flex.align-items-center
+        h2.m-2 Why Choose Us?
+        p.lead.p-2(style="line-height:2rem;") The purpose of this application is to allow anyone with the desire to learn robotics simulation an entry-point into this field without any prior knowledge or experience. It will also provide an entry-point for those without the means to pursue higher education in this field or the capital to expend on some of the expensive robotics learning applications and robotics simulation software currently on the market.   
       div.col.card.p-0
         img.card-body.p-0(src='/images/welcome.jpg')
+
+    .row 
+      .col
+          div 
+          .my-3.p-2.bg-white.rounded.box-shadow
+              h3.pb-1 Features:
+
+              div.row.p-2.text-center
+                  .col-sm-4.text-center
+                      div.m-2.card.p-0.shadow
+                          img.img-fluid.card-body.p-0(src='/images/robotics3.png')
+                          h5 Engaging Labs with Bite-Sized Modules
+                          p.text-muted
+                              i Learn to use a robotic arm to pick and place objects.
+                          a.btn.btn-primary(href="/users/course/0/0") Lab
+                  .col-sm-4.text-center
+                      div.m-2.card.p-0.shadow
+                          img.img-fluid.card-body.p-0(src='/images/robotics5.png')
+                          h5 User-Friendly Design
+                          p.text-muted
+                              i Visit your uncluttered and intuitive dashboard.
+                          a.btn.btn-primary(href="/users/dashboard") Dashboard
+                  .col-sm-4.text-center
+                      div.m-2.card.p-0.shadow
+                          img.img-fluid.card-body.p-0(src='/images/robotics4.png')
+                          h5 Community Chat for Help and Quizzes to Test Yourself
+                          p.text-muted
+                              i Engage with the community and test your comprehension.
+                          a.btn.btn-primary(href="/users/communitychat") Chat
+
 

@@ -143,6 +143,67 @@ router.get('/course/:lab/:module', function(req, res, next) {
   res.render('course', { labName: req.params.lab, labModule: req.params.module});
 });
 
+router.post("/course/quiz/grade", async function(req, res, next) {
+  const {email, labNumber} = req.body;
+  try {
+    let history = await History.findOne({
+        email
+    });
+    if (!history) {
+      history = new History({
+        email: email
+    });
+    }
+    let labQuizKey = "lab" + (parseInt(labNumber)+1)+"quiz";
+
+    let totalCorrect = 0;
+    let n = parseInt(history[labQuizKey])
+    while (n != 0) {
+      n = n & (n-1);
+      totalCorrect++;
+    }
+
+    res.status(200).json({totalCorrect:totalCorrect})
+  }
+  catch (error) {
+    console.log(error)
+    res.status(500).send("Error in Saving");
+  }
+})
+
+router.post("/course/quiz/correct", async function(req, res, next) {
+  const {email, labNumber, questionNumber} = req.body;
+  try {
+    console.log("email: ",email)
+    console.log("labNo: ",labNumber)
+    console.log("questionNumber: ",questionNumber)
+    let history = await History.findOne({
+        email
+    });
+    if (!history) {
+      history = new History({
+        email: email
+    });
+    }
+    let labQuizKey = "lab" + (parseInt(labNumber)+1)+"quiz";
+    history[labQuizKey] = parseInt(history[labQuizKey]) | Math.pow(2, parseInt(questionNumber)+1)
+
+    let totalCorrect = 0;
+    let n = parseInt(history[labQuizKey])
+    while (n != 0) {
+      n = n & (n-1);
+      totalCorrect++;
+    }
+
+    await history.save();
+    res.status(200).json({totalCorrect:totalCorrect})
+  }
+  catch (error) {
+    console.log(error)
+    res.status(500).send("Error in Saving");
+  }
+})
+
 router.post("/course/visit", async function(req, res, next) {
   const {email, labNumber, moduleNumber} = req.body;
   try {

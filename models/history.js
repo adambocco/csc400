@@ -55,6 +55,51 @@ const HistorySchema = mongoose.Schema({
         required: true,
         default: 0
     },
+    lab1quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab2quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab3quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab4quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab5quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab6quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab7quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab8quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    lab9quiz: {
+        type: Number,
+        required: true,
+        default: 0
+    },
 });
 
 // export model user with UserSchema

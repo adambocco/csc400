@@ -2,7 +2,7 @@ console.log("UTILS LOADED")
 if (typeof variable !== 'undefined') {
     // the variable is defined
 }
-let portNo = 80
+let portNo = 3000
 let emailDisplayed = document.getElementById("emailDisplayed");
 let user = false;
 
@@ -158,6 +158,13 @@ dashboardNavLink.onclick = () => {
 
 
 let userHistory;
+let currentLab = 0;
+
+
+let currentQuizQuestionNumber = 0;
+let currentQuizQuestionData;
+let currentQuizData;
+
 async function handleUnauthorized() {
     if (window.location.pathname == "/users/dashboard") {
         if (!user) {
@@ -214,7 +221,6 @@ async function handleUnauthorized() {
                   'Content-Type': 'application/json'
                 }
             });
-            console.log(userSubjects);
 
             for (let n = 0; n < userSubjects.data.subjects.length; n++) {
                 let atag = document.createElement("a");
@@ -255,15 +261,48 @@ async function handleUnauthorized() {
             changeLab(event.target.value)
         })
         
-
-        function changeLab(lab) {
+        let quizTitle = document.getElementById("quizTitle")
+        let quizProgress = document.getElementById("quizProgress")
+        let quizSection = document.getElementById("quizSection")
+        async function changeLab(lab) {
             let progressNumerator = 0;
             let progressDenominator = 0;
             
             modulesSection.innerHTML = "";
             for (let i = 0; i < LABS.length; i++) {
                 if (lab == LABS[i][0]) {
-                    // labName.innerHTML = lab;
+
+                    // <----QUIZ STUFF ---->
+                    currentLab = i
+                    currentQuizData = LABS[i][7]
+                    renderStartQuiz()
+
+
+                    let response;
+                    try {
+                        let payload = {}
+                        payload.email = user.data.email
+                        payload.labNumber= currentLab
+                        response = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/course/quiz/grade",  payload,     
+                        {
+                            headers: {
+                            'Content-Type': 'application/json',
+                            'token': token
+                            }
+                        })
+                        if (Number.isNaN(parseInt((response.data.totalCorrect/currentQuizData.length)*100))) {
+                            quizProgress.style.width = "0%"
+                            quizProgress.innerHTML = "0%"
+                        } else {
+                            quizProgress.style.width = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
+                            quizProgress.innerHTML = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
+                        }
+
+                    }catch(err) {console.log(err)}
+                    
+
+                    // <----QUIZ STUFF ---->
+
 
                     labNumberHeader.innerHTML = "Lab " + (i + 1) + ":"
 
@@ -312,10 +351,10 @@ async function handleUnauthorized() {
             labProgress.style.width = labProgressPercentage + "%";
             if (labProgressPercentage == 100) {
                 labProgress.innerHTML = "Lab Completed!"
-                labProgress.className = "progress-bar progress-bar-striped bg-success";
+                labProgress.className = "progress-bar progress-bar-striped bg-success progress-bar-animated";
             } 
             else {
-                labProgress.className = "progress-bar progress-bar-striped"
+                labProgress.className = "progress-bar progress-bar-striped progress-bar-animated"
             }
         }
         
@@ -344,10 +383,8 @@ async function handleUnauthorized() {
                     }
                   });
             } catch (err) {
-                console.log(err)
-                console.log(err.response)
+
                 if (err.response.status == 400) {
-                    console.log(err.response.data.message)
                     if (err.response.data.message) {
                         updateEmailStatusText.innerHTML = "Email <b>" + updateEmailInput.value + "</b> is taken"
                         updateEmailStatusText.className = "text-danger d-block"
@@ -417,22 +454,220 @@ async function handleUnauthorized() {
         mostRecentModuleButton.href = "http://" + window.location.hostname + ":" + portNo + "/users/course/" + (parseInt(userMostRecent[0])-1) + "/" + (parseInt(userMostRecent[1])-1)
         
 
-        // <------DASHBOARD ------>
-
-
-
         
 
 
+        function renderStartQuiz() {
+            let quizInstructionsRow = document.createElement("div")
+            quizInstructionsRow.className = "row"
+            let quizInstructionsTitle = document.createElement("h4")
+            quizInstructionsTitle.innerHTML = "Instructions:"
+
+            let quizInstructionsCol = document.createElement("div")
+            quizInstructionsCol.className = "col-10"
+            let quizInstructions = document.createElement("ul")
+            quizInstructions.innerHTML = 
+            `
+    <li>
+    Questions must be done in order
+    </li>
+    <li>
+    Quiz may be repeated as many times as you want
+    </li>
+    <li>
+    Questions may not be returned to after proceeding to next question
+    </li>
+    <li>
+    Click the <i class='far fa-arrow-alt-circle-right'></i> icon to begin
+    </li>
+    <div class='ml-5 mx-2 lead'>
+    Good Luck!
+    </div>
+            `
 
 
+            let quizInstructionsStartCol = document.createElement("div")
+            quizInstructionsStartCol.className = "col-2 d-flex justify-content-center align-items-center"
+            let startQuizButton = document.createElement("i")
+            startQuizButton.className = 'far fa-3x fa-arrow-alt-circle-right'
 
+            quizSection.appendChild(quizInstructionsTitle)
 
+            quizInstructionsCol.appendChild(quizInstructions)
+            quizInstructionsRow.appendChild(quizInstructionsCol)
 
+            quizInstructionsStartCol.appendChild(startQuizButton)
+            quizInstructionsRow.appendChild(quizInstructionsStartCol)
+            
+            quizSection.innerHTML = ""
+            quizSection.appendChild(quizInstructionsRow)
 
+            startQuizButton.addEventListener("click", ()=> {
+                renderQuiz()
+            })
+        }
 
+        // <-------- Quiz -------->
+        function renderQuiz() {
+            quizSection.innerHTML = ""
 
+            console.log("USERHISTORY:",userHistory)
+            let userQuizScore = userHistory.data["lab" + (currentLab+1) + "quiz"]
+            console.log("User Quiz Score  -  Lab "+(currentLab+1)+": ",userQuizScore)
+            let quizData = LABS[currentLab][7]
+            currentQuizData = quizData
+            console.log("Quiz Data: ", quizData)
+
+            currentQuizQuestionData = quizData[0]
+
+            console.log("Current Question: ",currentQuizQuestionData.question)
+            console.log("Current Choices: ",currentQuizQuestionData.choices)
+            console.log("Current Answer: ",currentQuizQuestionData.answer)
+            console.log("Current Explanation: ",currentQuizQuestionData.explanation)
+
+            let questionElementList = []
+
+            for (let i = 0; i < currentQuizData.length; i++) {
+                let questionInputs = []
+                currentQuizQuestionData = quizData[i]
+
+                let multipleChoiceCard = document.createElement("div");
+                multipleChoiceCard.className = "card";
+
+                let multipleChoiceBody = document.createElement("div")
+                multipleChoiceBody.className = "card-body"
+
+                multipleChoiceCard.appendChild(multipleChoiceBody)
+
+                let questionNumber = document.createElement("h4")
+                questionNumber.innerHTML = "Question "+(i+1)+": "
+                multipleChoiceBody.appendChild(questionNumber)
+
+                let questionPrompt = document.createElement("h5")
+                questionPrompt.innerHTML = currentQuizQuestionData.question
+                multipleChoiceBody.appendChild(questionPrompt)
+
+                let questionChoicesSection = document.createElement("div")
+                questionChoicesSection.className = "ml-5"
+                multipleChoiceBody.appendChild(questionChoicesSection)
+
+                for (let i = 0; i < currentQuizQuestionData.choices.length; i++) {
+                    let questionChoiceDiv = document.createElement("div")
+                    questionChoiceDiv.className = "form-check"
+
+                    let questionChoiceRadio = document.createElement("input")
+                    questionInputs.push(questionChoiceRadio)
+                    questionChoiceRadio.className = "form-check-input"
+                    questionChoiceRadio.id = "flexRadioDefault"+i
+                    questionChoiceRadio.name = "flexRadioDefault"
+                    questionChoiceRadio.type = "radio"
+
+                    let questionChoiceLabel = document.createElement("label")
+                    questionChoiceLabel.className = "form-check-label"
+                    questionChoiceLabel.setAttribute("for", "flexRadioDefault1")
+                    questionChoiceLabel.innerHTML = currentQuizQuestionData.choices[i]
+
+                    questionChoiceDiv.appendChild(questionChoiceRadio)
+                    questionChoiceDiv.appendChild(questionChoiceLabel)
+
+                    questionChoicesSection.appendChild(questionChoiceDiv)
+                    
+                }
+                multipleChoiceBody.appendChild(questionChoicesSection)
+
+                let quizRow = document.createElement("div")
+
+                let quizCol = document.createElement("div")
+                quizCol.className = "col-11"
+
+                let nextQuestion = document.createElement("i")
+                nextQuestion.className = 'far fa-3x fa-arrow-alt-circle-right'
+                let quizNavCol = document.createElement("div")
+                quizNavCol.className = "col-1 d-flex justify-content-center align-items-center"
+                quizNavCol.appendChild(nextQuestion)
+
+                quizRow.appendChild(quizCol)
+                quizRow.appendChild(quizNavCol)
+                quizCol.appendChild(multipleChoiceCard)
+                quizSection.appendChild(quizRow)
+
+                if (i == 0) {
+                    quizRow.className = "row"
+                } else {
+                    quizRow.className = "d-none"
+                }
+                questionElementList.push(quizRow)
+                if (i < currentQuizData.length-1) {
+                    nextQuestion.addEventListener("click",async ()=> {
+                        for (let j = 0; j < questionInputs.length; j++) {
+                            if (questionInputs[j].checked) {
+                                console.log("Answered: ", j)
+                                console.log("Correct Answer: ",currentQuizData[i].answer)
+                                if (j == currentQuizData[i].answer) {
+                                    let response;
+                                    try {
+                                        let payload = {}
+                                        payload.email = user.data.email
+                                        payload.labNumber= currentLab
+                                        payload.questionNumber = i
+                                        response = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/course/quiz/correct",  payload,     
+                                        {
+                                            headers: {
+                                            'Content-Type': 'application/json',
+                                            'token': token
+                                            }
+                                        })
+
+                                        console.log(response)
+                                        console.log("SCORE: ",parseInt((response.data.totalCorrect/currentQuizData.length)*100))
+                                        quizProgress.style.width = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
+                                        quizProgress.innerHTML = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
+                                    }catch(err) {console.log(err)}
+                                }
+                            }
+                        }
+                        questionElementList[i+1].className = "row"
+                        try {
+                            questionElementList[i].className = "d-none"
+                        } catch(err) {console.log(err)}
+                })
+                } else {
+                    // Results, retake quiz
+                    nextQuestion.addEventListener("click", async ()=> {
+                        quizSection.innerHTML = ""
+                        document.getElementById("quizLink").click()
+                        renderStartQuiz()
+                        for (let j = 0; j < questionInputs.length; j++) {
+                            if (questionInputs[j].checked) {
+                                console.log("Answered: ", j)
+                                console.log("Correct Answer: ",currentQuizData[i].answer)
+                                if (j == currentQuizData[i].answer) {
+                                    let response;
+                                    try {
+                                        let payload = {}
+                                        payload.email = user.data.email
+                                        payload.labNumber= currentLab
+                                        payload.questionNumber = i
+                                        response = await axios.post("http://" + window.location.hostname + ":" + portNo + "/users/course/quiz/correct",  payload,     
+                                        {
+                                            headers: {
+                                            'Content-Type': 'application/json',
+                                            'token': token
+                                            }
+                                        })
+                                        quizProgress.style.width = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
+                                        quizProgress.innerHTML = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
+                                    }catch(err) {console.log(err)}
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        }
     }
+        // <------DASHBOARD ------>
+
     let pathSplit = window.location.pathname.split("/")
     let threadObj = {}
 
