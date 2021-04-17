@@ -1,16 +1,69 @@
-const LAB1 = "Assembly Line Simulation";
-const LAB1LINKS = ["lBvjUTHeU5E", "zxwhCrkfoiM", "gV81KmNw5vk", "YYBELBuuEOM", 
+const LAB1 = "Introduction and Tutorial";
+const LAB1LINKS = ["ccHVpqSDzIE", "S7k4o0j4U7Y", "eT9TAP-GJJ4", "e_AnJTLaqec", 
+                "8ZKNv1HySnI"];
+const LAB1NAMES = ["Introduction and Installation", "User Interface and Scenes", "Camera Manipulation and Running a Simulation",
+            "Moving and Rotating Objects", "Scripts"];
+const LAB1CODE = [  
+    // Module 1
+    "", 
+
+    // Module 2
+    "",
+
+    // Module 3
+    "",
+
+    // Module 4
+    ""];
+const LAB1RESOURCES = ["IntroLabOutline.pdf"];
+const LAB1GOAL = "This lab will serve as an introduction to using CoppeliaSim. It is our most beginner friendly lab and will give students all the basic knowledge to install and navigate the software. At the end of the lab, students should be well equipped with the fundamentals of CoppeliaSim, and should be able to move to more advance labs with a little practice.";
+const LAB1LEARNINGOUTCOMES = ["Install Coppelia Sim", "Understand the default User Interface of CoppeliaSim", "Learn how to Open, save, and work with scenes", 
+                            "Learn how to manipulate the camera", "Learn how to run a simulation, and the adjust different parameters we can change for the simulation", 
+                            "Learn how to move and rotate objects in different ways", "Learn how objects attach to one another on the scene hierarchy", 
+                            "Learn about the different script types", "Learn how to add a child script", "Learn about LUA code as well as API calls"];
+const LAB1QUIZ = [{
+    // Multiple choice question
+    question: "What <b>version</b> of CoppeliaSim be installed for learning purposes?",
+    // Choices
+    choices: ["Player","Edu", "Pro"],
+    // Index of answer
+    answer: 1,
+    explanation: "The <b>Edu</b> version of CoppeliaSim should be installed, as it contains full simulation functionality and editing capabilities, but is not for commercial use.",
+},
+{
+    // Multiple choice question
+    question: "The view that contains a <b>hierarchy</b> for the all the objects in the scene is called the _____ hierarchy",
+    // Choices
+    choices: ["Scene", "Object", "Robot", "Joint"],
+    // Index of answer
+    answer: 0,
+    explanation: "The <b>scene</b> hierarchy shows all the objects in the scene, and their relative position in the hierarchy."
+},
+{
+    // Multiple choice question
+    question: "Moving an object relative to its parent frame should only be done on _____ objects",
+    // Choices
+    choices: ["Parent", "Child", "Neither", "Both"],
+    // Index of answer
+    answer: 1,
+    explanation: "You should generally only move <b>child</b> objects relative to their parents."
+}
+];
+            
+
+const LAB2 = "Assembly Line Simulation";
+const LAB2LINKS = ["lBvjUTHeU5E", "zxwhCrkfoiM", "gV81KmNw5vk", "YYBELBuuEOM", 
                 "nxkv7HZ7SkE", "4jJSoMwZoaw", "tjvz9G_RVHE", "dR0d6E-QoSw",
                 "qJyv152GNUY", "q6ERxYjSZxY", "MsLzc3a_yV4", "Mvl2R6dUQgo",
                 "0AdYeFACScw", "YG3tTNfdPy4", "4e0P_QJZE3c", "_WgG86endzo",
                  "EFD7NMd-H28", "j6qYPKkK_YY"];
-const LAB1NAMES = ["Introduction", "Building the Robotic Arm", "Adding Conveyor Belt and Tables",
+const LAB2NAMES = ["Introduction", "Building the Robotic Arm", "Adding Conveyor Belt and Tables",
             "Adding a Vision Sensor", "Writing the Factory Code (Part 1)", "Writing the Factory Code (Part 2)",
             "Vision Sensor and Conveyor Belt Control", "Sensing the Product Type", "Configuring Inverse Kinematics",
             "Idle and Grab Positions", "Color and Path Positions", "Defining Dummy Positions",
             "Definint Robotic Arm Targets", "Defining Robotic Arm Behavior", "Grabbing and Dropping Products",
             "Placing Cuboids in a Row", "Clearing the Tables", "Conclusion"];
-const LAB1CODE = [  
+const LAB2CODE = [  
                     // Module 1
                     "", 
 
@@ -422,15 +475,15 @@ const LAB1CODE = [
                     //Module 18
                     ``
                     ];
-const LAB1RESOURCES = ["Lab1Script.pdf"];
-const LAB1GOAL = "At the end of this lab you will have a completed scene in which products coming down a conveyor belt are identified as a certain class of product. You will create a robot arm capable of removing these items to a specific location.";
-const LAB1LEARNINGOUTCOMES = [  "Importing models",
+const LAB2RESOURCES = ["LAB1Script.pdf"];
+const LAB2GOAL = "At the end of this lab you will have a completed scene in which products coming down a conveyor belt are identified as a certain class of product. You will create a robot arm capable of removing these items to a specific location.";
+const LAB2LEARNINGOUTCOMES = [  "Importing models",
                                 "Using vision sensor to product types by color",
                                 "Manipulation of revolute joints",
                                 "Programmatically create and modify shapes",
                                 "Basics of inverse kinematics to dynamically control jointed models",
                                 "Setting inverse kinematic waypoints and paths"];
-const LAB1QUIZ = [
+const LAB2QUIZ = [
     {
         // Multiple choice question
         question: "What is the correct API call that returns the handle of the object <b>Ball</b> in the scene?",
@@ -460,15 +513,15 @@ const LAB1QUIZ = [
     }
 ]
 
-const LAB2 = "Maze Traversal Simulation";
-const LAB2LINKS = ["L2-14VdjpZ0", "gfD5Y4t89lE", "jhNr_7D1qwA", "4yZCF6grTMg", 
+const LAB3 = "Maze Traversal Simulation";
+const LAB3LINKS = ["L2-14VdjpZ0", "gfD5Y4t89lE", "jhNr_7D1qwA", "4yZCF6grTMg", 
                 "zzZtPfRIAQQ", "-VFRPylIWF0", "hZahk9ft_ZQ", "qA7NfoAQUTU",
                 "k2rCh7W2uz0", "9zxNyzY-IKM", "aB9TOzUbO-M", "cMv9ig8nDc0"];
-const LAB2NAMES = ["Introduction", "Creating the Maze", "Configuring the Maze and Finish Line",
+const LAB3NAMES = ["Introduction", "Creating the Maze", "Configuring the Maze and Finish Line",
             "Adding and Positioning Sensors", "Configuring Sensors", "Driving the Mobile Robot",
             "Staying Between the Walls", "Turning Corners", "Turning Around",
             "Configuring the Vision Sensor", "Taking the Correct Path", "Conclusion"];
-const LAB2CODE = [  
+const LAB3CODE = [  
     // Module 1
     "", 
 
@@ -739,14 +792,14 @@ const LAB2CODE = [
 
     // Module 12
     ""];
-const LAB2RESOURCES = ["Lab2Script.pdf", "mazes.txt"];
-const LAB2GOAL = ["In this lab you will create a 4-wheeled mobile robot equipped with sensors to automate movement and obstacle avoidance. This robot will be placed in a maze and programmed with the 'Wall-Following Algorithm' to traverse the maze until it finds the end."]
-const LAB2LEARNINGOUTCOMES = [  "Attaching sensor to model body",
+const LAB3RESOURCES = ["LAB2Script.pdf", "mazes.txt"];
+const LAB3GOAL = ["In this lab you will create a 4-wheeled mobile robot equipped with sensors to automate movement and obstacle avoidance. This robot will be placed in a maze and programmed with the 'Wall-Following Algorithm' to traverse the maze until it finds the end."]
+const LAB3LEARNINGOUTCOMES = [  "Attaching sensor to model body",
                                 "Reading from proximity and vision sensors",
                                 "Programatically produce an environment (maze)",
                                 "'Wall-Following Algorithm' for maze traversal",
                                 "Using joint explicit handling to drive vehicle"]
-const LAB2QUIZ = [
+const LAB3QUIZ = [
     {
         // Multiple choice question
         question: "Using the <b>Left Wall Following Algorithm</b>, which path should the robot take at an intersection that is blocked to the left but is not blocked ahead and not blocked on the right.",
@@ -784,45 +837,194 @@ const LAB2QUIZ = [
 
 
 
-const LAB3 = "Soccer Free Shot Simulation";
-const LAB3LINKS = ["zmxWTv78Xsk", "afaRanm81nM", "0FS5Q-9FkBM", "LWA6UUrLc-I"];
-const LAB3NAMES = ["Introduction and Environment Setup", "Creating a Robot to Shoot a Soccer Ball", 
+const LAB4 = "Soccer Free Shot Simulation";
+const LAB4LINKS = ["zmxWTv78Xsk", "afaRanm81nM", "0FS5Q-9FkBM", "LWA6UUrLc-I"];
+const LAB4NAMES = ["Introduction and Environment Setup", "Creating a Robot to Shoot a Soccer Ball", 
                     "Triggering a Goalie with Proximity Sensors", "Creating a UI Element"];
-const LAB3CODE = [  
+const LAB4CODE = [  
     // Module 1
     "", 
 
     // Module 2
-    "",
+    `<b>Robotnik Summit XL Script:</b>
+    function shootStraight()
+         straightJoint = sim.getObjectHandle('Prismatic_joint_straight')
+         sim.setJointTargetPosition(straightJoint, .5)
+         sim.wait(2)
+         sim.setJointTargetPosition(straightJoint, 0)
+    end
+
+    ...
+
+    function shootRight()
+        rightRotationJoint = sim.getObjectHandle('Revolute_joint_right')
+        rightShotJoint = sim.getObjectHandle('Prismatic_joint_right')
+        sim.setJointTargetPosition(straightShotJoint, -.1)
+        sim.setJointTargetPosition(rightRotationJoint, -15*math.pi/180)
+        sim.wait(2)
+        sim.setJointTargetPosition(rightShotJoint, .4)
+        sim.wait(2)
+        sim.setJointTargetPosition(rightShotJoint, 0)
+        sim.setJointTargetPosition(rightRotationJoint, 0)
+    end
+
+    ...
+
+    function shootLeft()
+        leftRotationJoint = sim.getObjectHandle('Revolute_joint_left')
+        leftShotJoint = sim.getObjectHandle('Prismatic_joint_left')
+         sim.setJointTargetPosition(straightShotJoint, -.1)
+        sim.setJointTargetPosition(leftRotationJoint, 15*math.pi/180)
+        sim.wait(2)
+        sim.setJointTargetPosition(leftShotJoint, .35)
+        sim.wait(2)
+        sim.setJointTargetPosition(leftShotJoint, 0)
+         sim.setJointTargetPosition(leftRotationJoint, 0)
+    end
+
+    ...
+
+    function sysCall_threadmain()
+        ball = sim.getObjectHandle('Sphere')
+        ballPos = sim.getObjectPosition(ball, -1)
+        ballOri = sim.getObjectOrientation(ball, -1)
+
+        while (true) do   
+            randomNumber=sim.getRandom()
+                if (randomNumber < 0.33) then
+                    shootLeft()
+                elseif (randomNumber >=0.33 and randomNumber <0.67) then
+                    shootStraight()
+                else
+                    shootRight()
+                end
+            sim.wait(2)
+            sim.setObjectPosition(ball, -1, ballPos)
+            sim.setObjectOrientation(ball, -1, ballOri)
+        end  
+    end        
+
+    `,
 
     // Module 3
-    "",
+    `<b>Robotnik Summit XL Script:</b>
+    goalie = sim.getObjectHandle(‘Prismatic_joint_goalie’)
+	sim.setJointTargetPosition(goalie, -.3)
+	sim.wait(2)
+	sim.setJointTargetPosition(goalie, -.8)
+	sim.wait(2)
+	sim.setJointTargetPosition(goalie, -1.35)
+
+    ...
+
+    function sysCall_threadmain()
+
+        goalie = sim.getObjectHandle('Prismatic_joint_goalie')
+        sim.setJointTargetPosition(goalie, -.8)
+        
+        ball = sim.getObjectHandle('Sphere')
+
+        rightProximitySensor = sim.getObjectHandle('Proximity_sensor_right')
+        leftProximitySensor = sim.getObjectHandle('Proximity_sensor_left')
+        
+        while (true) do    
+        
+            right = sim.checkProximitySensor(rightProximitySensor, ball)
+            left = sim.checkProximitySensor(leftProximitySensor, ball)
+            
+            if(left == 1) then
+                sim.setJointTargetPosition(goalie, -.3)
+                sim.wait(4)
+                sim.setJointTargetPosition(goalie, -.8)
+            elseif(right == 1) then
+
+                sim.setJointTargetPosition(goalie, -1.35)
+                sim.wait(4)
+                sim.setJointTargetPosition(goalie, -.8)
+            else
+                sim.setJointTargetPosition(goalie, -.8)
+            end
+        end
+    end
+
+    
+    `,
 
     // Module 4
-    ""];
-const LAB3RESOURCES = ["Lab3Script.pdf"];
-const LAB3GOAL = "";
-const LAB3LEARNINGOUTCOMES = [];
-const LAB3QUIZ = [];
+    `ui=simUI.create([[&ltui/&gt
+        &ltlabel id="100" text="Goal Count:" /&gt
+        &ltlabel id="101" text="0" style="font-size: 30px" /&gt
+    &lt/ui&gt']])
+    count=0
 
+    ...
 
+    goalProximitySensor = sim.getObjectHandle('Proximity_sensor_goal')
+     while (true) do    
+    
+        right = sim.checkProximitySensor(rightProximitySensor, ball)
+        left = sim.checkProximitySensor(leftProximitySensor, ball)
+        goal = sim.checkProximitySensor(goalProximitySensor, ball)
+        goalCheck = true
+        
+        if(goal == 1 and goalCheck == true) then
+            count = count + 1
+            goal = 0
+            goalCheck = false
+            simUI.setLabelText(ui,101,''..count)
+            print("GOAL!")
+            sim.wait(4)
+        end 
 
+    `
+];
 
+const LAB4RESOURCES = ["LAB3Script.pdf"];
+const LAB4GOAL = "The end product of this lab will be two robots competing in a soccer simulation. The student will build a goalie joint to stop attempted shots with proximity sensors, and the student will also build a shooting robot that attempts to aim shots at different parts of a goal.";
+const LAB4LEARNINGOUTCOMES = ["Apply positions and orientation of environment components", "Add a texture to a sphere", "Build a shooting robot out of compiled joints and primitive shapes",
+                            "Code the robot to choose different shots randomly", "Create Proximity sensors and trigger a response from a prismatic joint", 
+                            "Create a UI element, & update the element with a proximity sensor trigger", "Ensure logic is sound when counting goals"];
+const LAB4QUIZ = [
+    {
+    // Multiple choice question
+        question: "A ____ joint applies the force behind the soccer shot",
+    // Choices
+        choices: ["Prismatic","Revolute", "Spherical"],
+    // Index of answer
+        answer: 0,
+        explanation: "The <b>Prismatic</b> joint is a joint that extends out upon one axis, and is the driving force behind our robot's soccer shot." 
+    },
+    {
+    // Multiple choice question
+        question: "The revolute joint applies the rotation for shots directed at the: ",
+    // Choices
+        choices: ["Center","Left", "Right", "Both Left & right"],
+    // Index of answer
+        answer: 3,
+        explanation: "The revolute joints apply rotation to aim at the <b>sides</b> of the goal."
+    },
+    {
+    // Multiple choice question
+        question: "Why must we add a sim.wait() after scoring a goal?",
+    // Choices
+        choices: ["To allow time for the ball to reset","So the ball doesn't continue to trigger the goal proximity sensor", "To give time for the goalie to reset", "To give time for the shooting robot to reset"],
+    // Index of answer
+        answer: 1,
+        explanation: "The simulation must wait after scoring a goal <b> so the ball doesn't continue to trigger the goal proximity sensor</b>. The UI element would update each simulation step if the ball is left in the proximity sensor without waiting."
+    }
+];
 
-
-
-
-const LAB4 = "Garbage Collection Simulation";
-const LAB4LINKS = ["-L3d204Wvq4", "I6J5L3gZ9Lg", "v2NCKhxQ7us",
+const LAB5 = "Garbage Collection Simulation";
+const LAB5LINKS = ["-L3d204Wvq4", "I6J5L3gZ9Lg", "v2NCKhxQ7us",
                     "Eksrad83g_c", "k8rkNIsHZKs", "fWTaa_GDAHM",
                     "jr09XRXSh5E", "FqriIs13rmo", "mBK1mLqPqnc",
                     "xdbjaSy_T0Q", "kaieqhQd3BE", "Oqsc8zVWcPI",
                     "0OAOnbFXXg0", "bJ5j2yVXNSk", "vpAr7QQLQZM"];
-const LAB4NAMES = ["Introduction", "Building the Environment", "Building the Robot",
+const LAB5NAMES = ["Introduction", "Building the Environment", "Building the Robot",
                     "Adding Vision Sensors", "Coding the Vision Sensors", "Adding Proximity Sensors",
                     "Configuring Sensors", "Coding the Proximity Sensors", "Gripper and Robotic Arm","Path Dummies", "Completing Robot Pickup", "Dropping Trash in Receptacle",
                     "Dropping Trash", "Returning to Trash Pickup Area", "Conclusion"];
-const LAB4CODE = [  
+const LAB5CODE = [  
     // Module 1
     ``, 
 
@@ -967,18 +1169,20 @@ const LAB4CODE = [
         
         `
 ];
-const LAB4RESOURCES = [];
-const LAB4GOAL = "In this lab you will be creating a simulation of a mobile garbage collection robot. This robot will be able to autonomously move about an area, detecting where there is trash, and bringing it to the correct receptacle. This simulation has many other implications such as autonomous robots that can reorganize items and collect information about an area.";
-const LAB4LEARNINGOUTCOMES = ["YouBot - A mobile robot with robotic arm using inverse kinematics",
+const LAB5RESOURCES = [];
+const LAB5GOAL = "In this lab you will be creating a simulation of a mobile garbage collection robot. This robot will be able to autonomously move about an area, detecting where there is trash, and bringing it to the correct receptacle. This simulation has many other implications such as autonomous robots that can reorganize items and collect information about an area.";
+const LAB5LEARNINGOUTCOMES = ["YouBot - A mobile robot with robotic arm using inverse kinematics",
                                 "Gripping items and controlling a robotic arm",
                                 "Bounds detection with vision sensors",
                                 "Object detection with ray and pyramid type proximity sensors"];
-const LAB4QUIZ = [];
+const LAB5QUIZ = [];
 
 
-const LABS = [  [LAB1, LAB1LINKS, LAB1NAMES, LAB1CODE, LAB1RESOURCES, LAB1GOAL, LAB1LEARNINGOUTCOMES, LAB1QUIZ],
+const LABS = [  
+                [LAB1, LAB1LINKS, LAB1NAMES, LAB1CODE, LAB1RESOURCES, LAB1GOAL, LAB1LEARNINGOUTCOMES, LAB1QUIZ],
                 [LAB2, LAB2LINKS, LAB2NAMES, LAB2CODE, LAB2RESOURCES, LAB2GOAL, LAB2LEARNINGOUTCOMES, LAB2QUIZ],
                 [LAB3, LAB3LINKS, LAB3NAMES, LAB3CODE, LAB3RESOURCES, LAB3GOAL, LAB3LEARNINGOUTCOMES, LAB3QUIZ],
-                [LAB4, LAB4LINKS, LAB4NAMES, LAB4CODE, LAB4RESOURCES, LAB4GOAL, LAB4LEARNINGOUTCOMES, LAB4QUIZ]];
+                [LAB4, LAB4LINKS, LAB4NAMES, LAB4CODE, LAB4RESOURCES, LAB4GOAL, LAB4LEARNINGOUTCOMES, LAB4QUIZ],
+                [LAB5, LAB5LINKS, LAB5NAMES, LAB5CODE, LAB5RESOURCES, LAB5GOAL, LAB5LEARNINGOUTCOMES, LAB5QUIZ]];
 
               

@@ -2,7 +2,7 @@ console.log("UTILS LOADED")
 if (typeof variable !== 'undefined') {
     // the variable is defined
 }
-let portNo = 80
+let portNo = 3000
 let emailDisplayed = document.getElementById("emailDisplayed");
 let user = false;
 
@@ -252,6 +252,7 @@ async function handleUnauthorized() {
                 
             } else {
                 let labSelection = document.createElement("option");
+                console.log(i);
                 labSelection.innerHTML = LABS[i][0]
                 labsDropdown.appendChild(labSelection)
             }
