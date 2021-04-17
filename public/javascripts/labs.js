@@ -777,6 +777,13 @@ const LAB2QUIZ = [
 ]
 
 
+
+
+
+
+
+
+
 const LAB3 = "Soccer Free Shot Simulation";
 const LAB3LINKS = ["zmxWTv78Xsk", "afaRanm81nM", "0FS5Q-9FkBM", "LWA6UUrLc-I"];
 const LAB3NAMES = ["Introduction and Environment Setup", "Creating a Robot to Shoot a Soccer Ball", 
@@ -799,8 +806,179 @@ const LAB3LEARNINGOUTCOMES = [];
 const LAB3QUIZ = [];
 
 
+
+
+
+
+
+
+const LAB4 = "Garbage Collection Simulation";
+const LAB4LINKS = ["-L3d204Wvq4", "I6J5L3gZ9Lg", "v2NCKhxQ7us",
+                    "Eksrad83g_c", "k8rkNIsHZKs", "fWTaa_GDAHM",
+                    "jr09XRXSh5E", "FqriIs13rmo", "mBK1mLqPqnc",
+                    "xdbjaSy_T0Q", "kaieqhQd3BE", "Oqsc8zVWcPI",
+                    "0OAOnbFXXg0", "bJ5j2yVXNSk", "vpAr7QQLQZM"];
+const LAB4NAMES = ["Introduction", "Building the Environment", "Building the Robot",
+                    "Adding Vision Sensors", "Coding the Vision Sensors", "Adding Proximity Sensors",
+                    "Configuring Sensors", "Coding the Proximity Sensors", "Gripper and Robotic Arm","Path Dummies", "Completing Robot Pickup", "Dropping Trash in Receptacle",
+                    "Dropping Trash", "Returning to Trash Pickup Area", "Conclusion"];
+const LAB4CODE = [  
+    // Module 1
+    ``, 
+
+    // Module 2
+    ``,
+
+    // Module 3
+    ``,
+
+    // Module 4
+    `
+<b>YouBot Script:</b>
+
+    wheelJoints = {-1, -1, -1, -1}
+
+    wheelJoints[1] = sim.getObjectHandle('rollingJoint_fl')
+    wheelJoints[2] = sim.getObjectHandle('rollingJoint_rl')
+    wheelJoints[3] = sim.getObjectHandle('rollingJoint_rr')
+    wheelJoints[4] = sim.getObjectHandle('rollingJoint_fr')
+    
+    
+    leftVision = sim.getObjectHandle("leftVisionUnder")
+    rightVision = sim.getObjectHandle("rightVisionUnder")
+    
+    function drive(fbVelocity, lrVelocity, rotVelocity)
+
+        sim.setJointTargetVelocity(wheelJoints[1], -fbVelocity-lrVelocity-rotVelocity)
+        
+        sim.setJointTargetVelocity(wheelJoints[2], -fbVelocity+lrVelocity-rotVelocity)
+        
+        sim.setJointTargetVelocity(wheelJoints[3], -fbVelocity-lrVelocity+rotVelocity)
+        
+        sim.setJointTargetVelocity(wheelJoints[4], -fbVelocity+lrVelocity+rotVelocity)
+    end
+    `,
+    // Module 5
+    `
+<b>YouBot Script:</b>
+
+    while true do
+        
+        sim.readVisionSensor(leftVision)
+        sim.readVisionSensor(rightVision)
+
+        imageBufferLeft = sim.getVisionSensorCharImage(leftVision,0,0,1,1)
+
+        leftRed = tonumber(string.byte(imageBufferLeft, 1))
+        leftGreen = tonumber(string.byte(imageBufferLeft, 2))
+        leftBlue = tonumber(string.byte(imageBufferLeft, 3))
+
+        imageBufferRight = sim.getVisionSensorCharImage(rightVision,0,0,1,1)
+
+        rightRed = tonumber(string.byte(imageBufferRight, 1))
+        rightGreen = tonumber(string.byte(imageBufferRight, 2))
+        rightBlue = tonumber(string.byte(imageBufferRight, 3))
+
+
+        if (leftRed < 50 and leftGreen < 50 and leftBlue < 50) then
+            drive(0,0,1)
+            sim.wait( (13.085) + (sim.getRandom()*6.0425))
+            drive(1, 0, 0)
+            sim.wait(5)
+        elseif (rightRed < 50 and rightGreen < 50 and rightBlue < 50) then
+            drive(0,0,-1)
+            sim.wait( (13.085) + (sim.getRandom()*6.0425))
+            drive(1, 0, 0)
+            sim.wait(5)
+        else 
+            drive(1, 0, 0)
+            
+        end
+    end
+    `,
+        // Module 6
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+                // Module 7
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+            // Module 8
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+            // Module 9
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+            // Module 10
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+            // Module 11
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+                    // Module 12
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+                    // Module 13
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+                    // Module 14
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `,
+                    // Module 15
+    `
+    <b>YouBot Script:</b>
+    
+    
+        
+        `
+];
+const LAB4RESOURCES = [];
+const LAB4GOAL = "In this lab you will be creating a simulation of a mobile garbage collection robot. This robot will be able to autonomously move about an area, detecting where there is trash, and bringing it to the correct receptacle. This simulation has many other implications such as autonomous robots that can reorganize items and collect information about an area.";
+const LAB4LEARNINGOUTCOMES = ["YouBot - A mobile robot with robotic arm using inverse kinematics",
+                                "Gripping items and controlling a robotic arm",
+                                "Bounds detection with vision sensors",
+                                "Object detection with ray and pyramid type proximity sensors"];
+const LAB4QUIZ = [];
+
+
 const LABS = [  [LAB1, LAB1LINKS, LAB1NAMES, LAB1CODE, LAB1RESOURCES, LAB1GOAL, LAB1LEARNINGOUTCOMES, LAB1QUIZ],
                 [LAB2, LAB2LINKS, LAB2NAMES, LAB2CODE, LAB2RESOURCES, LAB2GOAL, LAB2LEARNINGOUTCOMES, LAB2QUIZ],
-                [LAB3, LAB3LINKS, LAB3NAMES, LAB3CODE, LAB3RESOURCES, LAB3GOAL, LAB3LEARNINGOUTCOMES, LAB3QUIZ]];
+                [LAB3, LAB3LINKS, LAB3NAMES, LAB3CODE, LAB3RESOURCES, LAB3GOAL, LAB3LEARNINGOUTCOMES, LAB3QUIZ],
+                [LAB4, LAB4LINKS, LAB4NAMES, LAB4CODE, LAB4RESOURCES, LAB4GOAL, LAB4LEARNINGOUTCOMES, LAB4QUIZ]];
 
               
