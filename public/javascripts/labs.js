@@ -1177,12 +1177,147 @@ const LAB5LEARNINGOUTCOMES = ["YouBot - A mobile robot with robotic arm using in
                                 "Object detection with ray and pyramid type proximity sensors"];
 const LAB5QUIZ = [];
 
+const LAB6 = "Crane Control Simulation";
+const LAB6LINKS = ["dvfAgQaOJBw", "pIvxJXdvISE", "gGFDTuhQmXs", "hVlJC5TxA2g"];
+const LAB6NAMES = ["Building the Environment", "Building the Crane", "Crane Control - X & Y Axes",
+            "Drop, Grip, Raise, and Release"];
+const LAB6CODE = [  
+    // Module 1
+    "", 
+
+    // Module 2
+    "",
+
+    // Module 3
+    `Create UI Controls
+	    x = sim.getObjectHandle('x_joint')
+    	y = sim.getObjectHandle('y_joint')
+   	    z = sim.getObjectHandle('z_joint')
+    
+    	xml = '&ltui title="Crane Control" closeable="false" resizeable="false" activate="false"&gt'..
+		[[
+       			 &ltlabel text="X" style="* "/&gt
+      		 	 &lthslider minimum="0" maximum="100" id="1"/&gt
+       		 	&ltlabel text="Y" style="* "/&gt
+      		 	 &lthslider minimum="0" maximum="100" id="2"/&gt
+       		 	&lt/ui&gt
+		]]
+	
+
+   	    ui=simUI.create(xml)
+     	simUI.setSliderValue(ui,1,0)
+
+    ...
+
+    Position Change Callback Function
+	    function PosChange_callback(ui,id,newVal)
+   		    pos=newVal/75
+   		    axis=id
+	    end
+    
+    ...
+
+
+    Add on-change event to sliders
+	    &lthslider minimum="0" maximum="100" on-change="PosChange_callback" id="1"/&gt
+	    &lthslider minimum="0" maximum="100" on-change="PosChange_callback" id="2"/&gt
+    
+    ...
+
+    Set Joint Position
+	    if ( axis == 1 ) then
+       		 sim.setJointPosition(x, pos)
+   	    end
+    
+    	if (axis == 2) then
+        		sim.setJointPosition(y, pos)
+    	End
+    `,
+
+    // Module 4
+    `
+    Open the gripper
+        sim.setJointTargetPosition(rotJointHandles[1],-1)
+        sim.setJointTargetPosition(rotJointHandles[2],-1
+
+    ...
+
+    Get relevant object handles
+        attachPoint = sim.getObjectHandle('BarrettHand_attachPoint')
+        attachSensor = sim.getObjectHandle('BarrettHand_attachProxSensor')
+        cuboid = sim.getObjectHandle('Cuboid')
+
+    ...
+    
+    Create Button to Drop Crane
+        &ltbutton text="GO" on-click="Go" id="3"/&gt
+        function Go(ui, id)
+        sim.setJointTargetPosition(z, .54)
+     End
+
+     ...
+        
+    Send In Position Signal
+
+    if(sim.getJointPosition(z) >= .54 ) then
+        sim.setIntegerSignal('In_Position', 1)
+    End
+
+    ...
+
+    Attach object to gripper & close gripper
+        positionSignal = sim.getIntegerSignal('In_Position')
+        
+        if(positionSignal == 1) then
+            if (sim.checkProximitySensor(attachSensor, cuboid)==1) then
+                sim.setObjectParent(cuboid,attachPoint,true)
+                attachedObject = true
+            end
+            positionSignal = 0
+            closing = true
+        End
+
+        if closing then
+            sim.setJointTargetVelocity(closingJointHandles[1],-0.02)
+            sim.setJointTargetVelocity(closingJointHandles[2],-0.02)
+            sim.setIntegerValue('Return', 1)
+    ...
+
+    Add Release button & cb function
+
+        &ltbutton text="RELEASE" on-click="Release" id="4"/&gt
+
+        function Release(ui, id)
+            sim.setIntegerSignal('Release', 1)
+        End
+
+    ...
+
+    Open fingers & detach object
+
+        if(releaseSignal == 1) then
+            closing = false
+            sim.setIntegerSignal('In_position', 0)
+            if(attachedObject == true) then
+                sim.setObjectParent(attachedShape, -1, true)
+            end
+        end
+    `];
+
+const LAB6RESOURCES = ["Lab6Outline.pdf"];
+const LAB6GOAL = "This lab will simulate a crane game. It will set up control for the x and y coordinates of the crane, and have a button to drop, grab, and raise the crane. Finally, you will create a button to release any grabbed objects.";
+const LAB6LEARNINGOUTCOMES = ["Setup greppable, detectable objects to be gripped", "Build crane mechanism with joints and auxiliary shapes", "Write scripts to set joint positions with sliders", 
+                            "Create button to attempt to drop, grip, and raise an object", "Send integer signals between scripts", 
+                            "Create button to release an object"];
+const LAB6QUIZ = [];
+            
 
 const LABS = [  
                 [LAB1, LAB1LINKS, LAB1NAMES, LAB1CODE, LAB1RESOURCES, LAB1GOAL, LAB1LEARNINGOUTCOMES, LAB1QUIZ],
                 [LAB2, LAB2LINKS, LAB2NAMES, LAB2CODE, LAB2RESOURCES, LAB2GOAL, LAB2LEARNINGOUTCOMES, LAB2QUIZ],
                 [LAB3, LAB3LINKS, LAB3NAMES, LAB3CODE, LAB3RESOURCES, LAB3GOAL, LAB3LEARNINGOUTCOMES, LAB3QUIZ],
                 [LAB4, LAB4LINKS, LAB4NAMES, LAB4CODE, LAB4RESOURCES, LAB4GOAL, LAB4LEARNINGOUTCOMES, LAB4QUIZ],
-                [LAB5, LAB5LINKS, LAB5NAMES, LAB5CODE, LAB5RESOURCES, LAB5GOAL, LAB5LEARNINGOUTCOMES, LAB5QUIZ]];
+                [LAB5, LAB5LINKS, LAB5NAMES, LAB5CODE, LAB5RESOURCES, LAB5GOAL, LAB5LEARNINGOUTCOMES, LAB5QUIZ],
+                [LAB6, LAB6LINKS, LAB6NAMES, LAB6CODE, LAB6RESOURCES, LAB6GOAL, LAB6LEARNINGOUTCOMES, LAB6QUIZ]];
 
               
