@@ -2,7 +2,7 @@ console.log("UTILS LOADED")
 if (typeof variable !== 'undefined') {
     // the variable is defined
 }
-let portNo = 80
+let portNo = 3000
 let emailDisplayed = document.getElementById("emailDisplayed");
 let user = false;
 
@@ -551,6 +551,7 @@ async function handleUnauthorized() {
                 let questionChoicesSection = document.createElement("div")
                 questionChoicesSection.className = "ml-5"
                 multipleChoiceBody.appendChild(questionChoicesSection)
+                
 
                 for (let i = 0; i < currentQuizQuestionData.choices.length; i++) {
                     let questionChoiceDiv = document.createElement("div")
@@ -575,6 +576,16 @@ async function handleUnauthorized() {
                     
                 }
                 multipleChoiceBody.appendChild(questionChoicesSection)
+
+                let questionHint = document.createElement("i")
+                questionHint.className = "fas fa-info-circle p-3 float-right"
+                
+                questionHint.onclick = () => {
+                    questionHint.innerHTML = currentQuizData[i].explanation
+                }
+
+                multipleChoiceBody.appendChild(questionHint)
+
 
                 let quizRow = document.createElement("div")
 
@@ -619,8 +630,6 @@ async function handleUnauthorized() {
                                             }
                                         })
 
-                                        console.log(response)
-                                        console.log("SCORE: ",parseInt((response.data.totalCorrect/currentQuizData.length)*100))
                                         quizProgress.style.width = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
                                         quizProgress.innerHTML = parseInt((response.data.totalCorrect/currentQuizData.length)*100)+"%"
                                     }catch(err) {console.log(err)}
@@ -640,8 +649,7 @@ async function handleUnauthorized() {
                         renderStartQuiz()
                         for (let j = 0; j < questionInputs.length; j++) {
                             if (questionInputs[j].checked) {
-                                console.log("Answered: ", j)
-                                console.log("Correct Answer: ",currentQuizData[i].answer)
+
                                 if (j == currentQuizData[i].answer) {
                                     let response;
                                     try {

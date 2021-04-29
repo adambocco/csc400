@@ -2,10 +2,15 @@
   "name": "robotacademy",
   "version": "0.0.0",
   "private": true,
+  "jest": {
+    "verbose": true
+  },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "node_modules/.bin/jest"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.6.0",
@@ -23,5 +28,9 @@
     "mongoose-auto-increment": "^5.0.1",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
   }
 }
