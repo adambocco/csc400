@@ -248,9 +248,9 @@ router.post("/course/visited", async function(req, res, next) {
 router.post(
     "/registerCheck",
     [
-        check("username", "Please Enter a Valid Username").exists(),
-        check("email", "Please enter a valid email").isEmail(),
-        check("password", "Please enter a valid password").isLength({
+        check("username", "Please enter a username").exists(),
+        check("email", "Please enter a valid email (email@email.email)").isEmail(),
+        check("password", "Please enter a valid password greater than 6 characters").isLength({
             min: 6
         })
     ],
@@ -272,7 +272,7 @@ router.post(
                 email
             });
             if (user) {
-                return res.status(400).json({
+                return res.status(401).json({
                     msg: "User Already Exists"
                 });
             }
@@ -386,7 +386,7 @@ router.post(
   async (req, res) => {
     
     const errors = validationResult(req);
-    console.log(req.body)
+
     if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array()
@@ -394,19 +394,19 @@ router.post(
     }
 
     const { oldEmail, newEmail } = req.body;
-    console.log(req.body)
+
     try {
       const userWithNewEmail = await User.findOne({
         email: newEmail
       });
-      console.log("USER: ", userWithNewEmail)
+
       if (userWithNewEmail) {
         return res.status(400).json({
           message: "User Already Exists"
         });
       }
       const user = await User.findOne({email: oldEmail});
-      console.log("USER!!!:",user);
+
       user.email = newEmail;
       await user.save();
 

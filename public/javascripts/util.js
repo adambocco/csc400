@@ -1,4 +1,4 @@
-console.log("UTILS LOADED")
+
 if (typeof variable !== 'undefined') {
     // the variable is defined
 }
@@ -32,6 +32,15 @@ const handleLogin = async function () {
 };
 
 const handleRegister = async function() {
+    let registerErrorText = document.getElementById("registerErrorText"); 
+
+    if (document.querySelector("#password").value != document.querySelector("#password2").value) {
+        registerErrorText.innerHTML = "Passwords must match";
+        return;
+    }
+
+
+    registerErrorText.innerHTML = "";
     let registerStatus;
     try {
         let payload = {}
@@ -45,9 +54,24 @@ const handleRegister = async function() {
               'token': token
             }
         })
+        console.log(registerStatus)
+    }catch(err) {
+        console.log(err.response)
+        console.log(err.response.status)
 
-    }catch(err) {console.log(err)}
-    document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
+        if (err.response.status == 400) {
+            err.response.data.errors.forEach(element => {
+                registerErrorText.innerHTML += `
+                                                <p>${element.msg}</p>
+                `
+            });
+        } else if (err.response.status == 401) {
+            registerErrorText.innerHTML += `
+                                            <p>${err.response.data.msg}</p>
+            `
+        }
+    }
+    // document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
 };
 
 const handleLogout = async function() {
