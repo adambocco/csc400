@@ -1316,7 +1316,7 @@ const LAB6QUIZ = [];
 const LAB7 = "Collision Avoidance Car";
 const LAB7LINKS = ["CzHpAKxa9DM", "w-uFUpfwDHc", "9IsLEcGHwDs", "04yMm8YxJxM", 
                 "NJRk0yfFVHM", "3g8vz04NO98", "xEu3ag6ztRM", "KwrsIG9assA"];
-const LAB7NAMES = ["Introduction", "Creating a Simple Car", "Adding Proximity Sensors to the Car",
+const LAB7NAMES = ["Introduction", "Creating a Simple Car", "Adding Proximity Sensors to the Car", "Getting the Car to Move",
             "Geting the Car to Avoid Collisions", "Creating a UI Element to Adjust Speed", "Improving Obstacle Detection", "Conclusion"];
 const LAB7CODE = [  
     // Module 1
