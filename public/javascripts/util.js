@@ -55,6 +55,7 @@ const handleRegister = async function() {
             }
         })
         console.log(registerStatus)
+        document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
     }catch(err) {
         console.log(err.response)
         console.log(err.response.status)
@@ -71,7 +72,6 @@ const handleRegister = async function() {
             `
         }
     }
-    // document.location.href = "http://" + window.location.hostname + ":" + portNo + "/users/login"
 };
 
 const handleLogout = async function() {
