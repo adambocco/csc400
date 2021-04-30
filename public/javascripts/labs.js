@@ -1312,12 +1312,172 @@ const LAB6LEARNINGOUTCOMES = ["Setup greppable, detectable objects to be gripped
 const LAB6QUIZ = [];
             
 
+
+const LAB7 = "Collision Avoidance Car";
+const LAB7LINKS = ["CzHpAKxa9DM", "w-uFUpfwDHc", "9IsLEcGHwDs", "04yMm8YxJxM", 
+                "NJRk0yfFVHM", "3g8vz04NO98", "xEu3ag6ztRM", "KwrsIG9assA"];
+const LAB7NAMES = ["Introduction", "Creating a Simple Car", "Adding Proximity Sensors to the Car",
+            "Geting the Car to Avoid Collisions", "Creating a UI Element to Adjust Speed", "Improving Obstacle Detection", "Conclusion"];
+const LAB7CODE = [  
+    // Module 1
+    "", 
+
+    // Module 2
+    "",
+
+    // Module 3
+    "",
+
+    // Module 4
+    "", 
+
+    // Module 5
+    "", 
+
+    // Module 6
+    "", 
+
+    // Module 7
+    "", 
+
+    // Module 8
+    ""];
+const LAB7RESOURCES = [];
+const LAB7GOAL = "In this lab, students will build a simple mobile car that is able to detect obstacles and avoid collisions. It will introduce to students basic uses of primitive shapes, joints, and proximity sensors. At the end of the Lab, students whill have the core understandings of proximity sensors in CoppeliaSim and how to use them to allow robots to detect and avoid objects.";
+const LAB7LEARNINGOUTCOMES = ["Learn how to use primitive shapes and joints to create a basic robot", "Learn how to attach proximity sensors to a robot",
+                            "Learn how to use motors to move a car", "Learn how to use sensor detection to execute a specific function", "Learn how to add a slider UI",
+                            "Learn multiple techniques to allow a robot to avoid collision"]
+const LAB7QUIZ = [{
+    // Multiple choice question
+    question: "Which <b>joint dynamic property</b> needs to be enabled in order for the wheel to spin?",
+    // Choices
+    choices: ["Body","Motor", "Control"],
+    // Index of answer
+    answer: 1,
+    explanation: "The <b>motor property</b> needs to be enabled to allow the wheel to spin and allow the car to move."
+},
+{
+    // Multiple choice question
+    question: "At least how many objects should a front <b>proximity sensor</b> detect for the car to start adjusting it's direction?",
+    // Choices
+    choices: ["0", "1", "2", "3"],
+    // Index of answer
+    answer: 1,
+    explanation: "The car should start adjusting it's direction when a <b>proximity sensor</b> detects any object."
+},
+{
+    // Multiple choice question
+    question: "If the car is detecting on object on its left side when it detected an object using its front right proximity sensor, which direction should it go backwards?",
+    // Choices
+    choices: ["Straight", "Right", "Left", "Up"],
+    // Index of answer
+    answer: 2,
+    explanation: "The car should move backwards to the left, as it will allow it to shift its forward direction to the right and avoid the object to its left"
+}
+];
+
+
+const LAB8 = "Automated Coffee Maker";
+const LAB8LINKS = ["15LfxuGBKYQ", "hVOrGL-hiL8", "SaCLeet5UE8", "eHjbbvfcaQY", 
+                "X1LOUl0iklY", "zu3F8MideGE", "Wn6pM27tr94", "39FM_89YMEw",
+                "cIPl4gL9BqE", "XKNTiQNCL2Q", "s-vnePUwGK4", "8DIjkaqohVE",
+                "EOOu8n7JtG0", "rrjL4nG86Vg", "dHjSciElNng"];
+const LAB8NAMES = ["Introduction", "Creating the Environment", "Adding the UI Element", "UI Design(Tabs)", "UI Design(Combo Box)", 
+            "UI Design(Radio Buttons)", "UI Design(Sliders)", "UI Design(Button) and Signals", "Receiving Signals in Another Script", 
+            "Adding Dummies for Dispensers", "Rotating Dispensers", "Generating Objects Through Dispensers (Part 1)", 
+            "Generating Objects Through Dispensers (Part 2)", "Dispensing Drinks Based on Inputs", "Conclusion"];
+const LAB8CODE = [  
+    // Module 1
+    "", 
+
+    // Module 2
+    "",
+
+    // Module 3
+    "",
+
+    // Module 4
+    "", 
+
+    // Module 5
+    "", 
+
+    // Module 6
+    "", 
+
+    // Module 7
+    "", 
+
+    // Module 8
+    "",
+
+    // Module 9
+    "", 
+
+    // Module 10
+    "", 
+
+    // Module 11
+    "", 
+
+    // Module 12
+    "", 
+
+    // Module 13
+    "", 
+
+    // Module 14
+    "", 
+
+    // Module 15
+    ""];
+const LAB8RESOURCES = [];
+const LAB8GOAL = "In this lab, students will build a machine that dispenses coffee using inputs provided by users through a UI. It will introduce to students how to create a UI and show various features offered by CoppeliaSim to customize the UI. By the end of the Lab, students will be able to create a UI for their simulations, as well as be able to generate objects and receive inputs sent by different scripts.";
+const LAB8LEARNINGOUTCOMES = ["Learn how to create UI elements", "Learn how to implement Tab UI feature", "Learn how to implement Combo Box UI feature", 
+                            "Learn how to implement Radio Button UI feature", "Learn how to implement Slider UI feature", "Learn how to send signals from one script to another", 
+                            "Learn how to set motor positions", "Learn how to generate objects"]
+const LAB8QUIZ = [{
+    // Multiple choice question
+    question: "Which UI feature includes moving an element to adjust its value?",
+    // Choices
+    choices: ["Tab", "Combo Box", "Radio Button", "Slider"],
+    // Index of answer
+    answer: 3,
+    explanation: "The <b>mslider</b> is a UI feature that involves moving an element left and right or up and down."
+},
+{
+    // Multiple choice question
+    question: "Which dynamic property of a <b>joint</b> needs to be enabled for its joint position to be set throught a script?",
+    // Choices
+    choices: ["Motor", "Control", "Motor and Control"],
+    // Index of answer
+    answer: 2,
+    explanation: "Both its motor and control options need to be enabled for a joint to be able to set its position though a script."
+},
+{
+    // Multiple choice question
+    question: "When creating a shape using <b>sim.createPureShape</b>, what will '1' as the first parameter create?",
+    // Choices
+    choices: ["Sphere", "Cube", "Cone", "Cylinder"],
+    // Index of answer
+    answer: 0,
+    explanation: "A <b>sphere</b> will be created since its <b>primitiveType</b> integer is set to '1'"
+}
+];
+         
+
+
+
+
 const LABS = [  
                 [LAB1, LAB1LINKS, LAB1NAMES, LAB1CODE, LAB1RESOURCES, LAB1GOAL, LAB1LEARNINGOUTCOMES, LAB1QUIZ],
                 [LAB2, LAB2LINKS, LAB2NAMES, LAB2CODE, LAB2RESOURCES, LAB2GOAL, LAB2LEARNINGOUTCOMES, LAB2QUIZ],
                 [LAB3, LAB3LINKS, LAB3NAMES, LAB3CODE, LAB3RESOURCES, LAB3GOAL, LAB3LEARNINGOUTCOMES, LAB3QUIZ],
                 [LAB4, LAB4LINKS, LAB4NAMES, LAB4CODE, LAB4RESOURCES, LAB4GOAL, LAB4LEARNINGOUTCOMES, LAB4QUIZ],
                 [LAB5, LAB5LINKS, LAB5NAMES, LAB5CODE, LAB5RESOURCES, LAB5GOAL, LAB5LEARNINGOUTCOMES, LAB5QUIZ],
-                [LAB6, LAB6LINKS, LAB6NAMES, LAB6CODE, LAB6RESOURCES, LAB6GOAL, LAB6LEARNINGOUTCOMES, LAB6QUIZ]];
+                [LAB6, LAB6LINKS, LAB6NAMES, LAB6CODE, LAB6RESOURCES, LAB6GOAL, LAB6LEARNINGOUTCOMES, LAB6QUIZ],
+                [LAB7, LAB7LINKS, LAB7NAMES, LAB7CODE, LAB7RESOURCES, LAB7GOAL, LAB7LEARNINGOUTCOMES, LAB7QUIZ],
+                [LAB8, LAB8LINKS, LAB8NAMES, LAB8CODE, LAB8RESOURCES, LAB8GOAL, LAB8LEARNINGOUTCOMES, LAB8QUIZ]
+                ];
 
               
