@@ -1464,7 +1464,65 @@ const LAB8QUIZ = [{
     explanation: "A <b>sphere</b> will be created since its <b>primitiveType</b> integer is set to '1'"
 }
 ];
-         
+
+
+const LAB9 = "Remote Control Car";
+const LAB9LINKS = ["RyuDF6zuULM", "12Ohem7APGU", "I_pMp1v3B0E", "yLoS-EMs_b8", 
+                "O9CQGjvhNgY", "WmZ674Wy6MM"];
+const LAB9NAMES = ["Introduction", "Recreating the Car Model", "Setting Up the UI", "Moving the Car Based on UI", "Adding a Front View Camera", 
+            "Conclusion"];
+const LAB9CODE = [  
+    // Module 1
+    "", 
+
+    // Module 2
+    "",
+
+    // Module 3
+    "",
+
+    // Module 4
+    "", 
+
+    // Module 5
+    "", 
+
+    // Module 6
+    ""];
+const LAB9RESOURCES = [];
+const LAB9GOAL = "In this lab, students will combine what they have learned in the previous two labs to create a remote control car model using motors and UI design. It will also introduct to students vision sensors and the image widget available in CoppeliaSim. The goal of this lab is to review previously covered topics in order to apply them to different projects, as well as to cover vision sensors and displaying images.";
+const LAB9LEARNINGOUTCOMES = ["Review how to use primitive shapes and joints", "Review how to use motors to move a car", "Review how to create UI elements",  
+                            "Review how to implement Slider UI feature", "Learn how to use vision sensors", "Review how to implement Image UI feature", 
+                            "Learn how to apply learned concepts to new projects"];
+const LAB9QUIZ = [{
+    // Multiple choice question
+    question: "When using tags to edit a custom UI in CoppeliaSim, which type should the <b>layout</b> be to set widgets side-by-side",
+    // Choices
+    choices: ["hbox", "vbox", "left-right", "form"],
+    // Index of answer
+    answer: 0,
+    explanation: "<b>Layout</b> should be set to <b>hbox</b> to position widgets side by side."
+},
+{
+    // Multiple choice question
+    question: "Which sensor is used to capture images in a scene?",
+    // Choices
+    choices: ["Proximity Sensor", "Vision Sensor", "Force Sensor"],
+    // Index of answer
+    answer: 1,
+    explanation: "The <b>vision sensor</b> allows images to be captured during a simulation."
+},
+{
+    // Multiple choice question
+    question: "Which custom UI widget allows you to project what a <b>vision sensor</b> sees on the UI window?",
+    // Choices
+    choices: ["Slider", "Tabs", "Radio Button", "Image"],
+    // Index of answer
+    answer: 3,
+    explanation: "The <b>image</b> widget allows you to project images onto a UI window."
+}
+];
+
 
 
 
@@ -1477,7 +1535,8 @@ const LABS = [
                 [LAB5, LAB5LINKS, LAB5NAMES, LAB5CODE, LAB5RESOURCES, LAB5GOAL, LAB5LEARNINGOUTCOMES, LAB5QUIZ],
                 [LAB6, LAB6LINKS, LAB6NAMES, LAB6CODE, LAB6RESOURCES, LAB6GOAL, LAB6LEARNINGOUTCOMES, LAB6QUIZ],
                 [LAB7, LAB7LINKS, LAB7NAMES, LAB7CODE, LAB7RESOURCES, LAB7GOAL, LAB7LEARNINGOUTCOMES, LAB7QUIZ],
-                [LAB8, LAB8LINKS, LAB8NAMES, LAB8CODE, LAB8RESOURCES, LAB8GOAL, LAB8LEARNINGOUTCOMES, LAB8QUIZ]
+                [LAB8, LAB8LINKS, LAB8NAMES, LAB8CODE, LAB8RESOURCES, LAB8GOAL, LAB8LEARNINGOUTCOMES, LAB8QUIZ],
+                [LAB9, LAB9LINKS, LAB9NAMES, LAB9CODE, LAB9RESOURCES, LAB9GOAL, LAB9LEARNINGOUTCOMES, LAB9QUIZ]
                 ];
 
               
